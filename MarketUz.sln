@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketUz.Infrastructure", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketUz.Domain", "MarketUz.Domain\MarketUz.Domain.csproj", "{DB906B83-562C-4FE1-8BC3-C66FFF139BD6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiyorMarket - Backup", "DiyorMarket\DiyorMarket - Backup.csproj", "{0DC29BF7-C2FF-4C88-8C31-B8F719C23356}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketUz", "DiyorMarket\MarketUz.csproj", "{0DC29BF7-C2FF-4C88-8C31-B8F719C23356}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
