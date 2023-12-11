@@ -1,6 +1,6 @@
-﻿using DiyorMarket.Domain.Entities;
+﻿using MarketUz.Domain.Entities;
 
-namespace DiyorMarketApi.Services
+namespace MarketUzApi.Services
 {
     public class ProductsService
     {

@@ -1,12 +1,12 @@
-﻿using DiyorMarket.Domain.Entities;
-using DiyorMarket.Domain.Interfaces.Services;
-using DiyorMarketApi.Services;
+﻿using MarketUz.Domain.Entities;
+using MarketUz.Domain.Interfaces.Services;
+using MarketUzApi.Services;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace DiyorMarketApi.Controllers
+namespace MarketUzApi.Controllers
 {
     [Route("api/products")]
     [ApiController]

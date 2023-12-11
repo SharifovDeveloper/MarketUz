@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using DiyorMarket.Domain.DTOs.Category;
-using DiyorMarket.Domain.DTOs.Product;
-using DiyorMarket.Domain.Entities;
-using DiyorMarketApi.Services;
+using MarketUz.Domain.DTOs.Category;
+using MarketUz.Domain.DTOs.Product;
+using MarketUz.Domain.Entities;
+using MarketUzApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DiyorMarketApi.Controllers
+namespace MarketUzApi.Controllers
 {
     [Route("api/categories")]
     [ApiController]

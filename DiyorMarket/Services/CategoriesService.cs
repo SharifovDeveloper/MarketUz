@@ -1,5 +1,5 @@
-﻿using DiyorMarket.Domain.Entities;
-namespace DiyorMarketApi.Services
+﻿using MarketUz.Domain.Entities;
+namespace MarketUzApi.Services
 {
     public class CategoriesService
     {

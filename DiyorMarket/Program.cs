@@ -1,5 +1,5 @@
 using AutoMapper;
-using DiyorMarket.Extensions;
+using MarketUz.Extensions;
 using Microsoft.AspNetCore.StaticFiles;
 using Serilog;
 

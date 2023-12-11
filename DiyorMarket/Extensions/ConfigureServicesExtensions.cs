@@ -1,10 +1,10 @@
-﻿using DiyorMarket.Domain.Interfaces.Repositories;
-using DiyorMarket.Infrastructure.Persistence;
-using DiyorMarket.Infrastructure.Persistence.Repositories;
+﻿using MarketUz.Domain.Interfaces.Repositories;
+using MarketUz.Infrastructure.Persistence;
+using MarketUz.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
-namespace DiyorMarket.Extensions
+namespace MarketUz.Extensions
 {
     public static class ConfigureServicesExtensions
     {
@@ -31,7 +31,7 @@ namespace DiyorMarket.Extensions
 
         public static IServiceCollection ConfigureDatabaseContext(this IServiceCollection services)
         {
-            services.AddDbContext<DiyorMarketDbContext>(options =>
+            services.AddDbContext<MarketUzDbContext>(options =>
                 options.UseSqlServer(""));
 
             return services;
