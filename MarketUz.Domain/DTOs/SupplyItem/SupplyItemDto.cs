@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MarketUz.Domain.DTOs.SupplyItemDto
+namespace MarketUz.Domain.DTOs.SupplyItem
 {
     public record SupplyItemDto(
       int Id,

@@ -4,7 +4,7 @@ namespace MarketUz.Domain.Entities
 {
     public class Sale : EntityBase
     {
-      
+
         public DateTime SaleDate { get; set; }
 
         public int CustomerId { get; set; }

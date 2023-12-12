@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+
+using MarketUz.Domain.DTOs.SaleItem;
+using MarketUz.Domain.DTOs.SupplyItem;
 
 namespace MarketUz.Domain.DTOs.Supply
 {
@@ -10,7 +9,7 @@ namespace MarketUz.Domain.DTOs.Supply
         int Id,
         DateTime SupplyDate,
         int SupplierId,
-        ICollection<SupplyItemDto> SupplyItems);
-    
-    
+        ICollection<SupplyItemDto> Sales);
+
+
 }

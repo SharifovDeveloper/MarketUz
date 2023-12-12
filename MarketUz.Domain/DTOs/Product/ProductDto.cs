@@ -1,4 +1,6 @@
-﻿namespace MarketUz.Domain.DTOs.Product
+﻿using MarketUz.Domain.DTOs.SaleItem;
+
+namespace MarketUz.Domain.DTOs.Product
 {
     public record ProductDto(
          int Id,

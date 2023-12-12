@@ -4,7 +4,6 @@ namespace MarketUz.Domain.Entities
 {
     public class SupplyItem : EntityBase
     {
-     
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }
 

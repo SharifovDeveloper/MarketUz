@@ -9,6 +9,7 @@ namespace DiyorMarket.Domain.DTOs.Sale
     public record SaleDto(
         int Id,
         DateTime SaleDate,
-        int CustomerId);
+        int CustomerId
+        );
     
 }

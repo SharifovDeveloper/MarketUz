@@ -2,9 +2,9 @@
 
 namespace MarketUz.Domain.Entities
 {
-    public class SaleItem:EntityBase
+    public class SaleItem : EntityBase
     {
-       
+
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }
 
