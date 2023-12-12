@@ -1,14 +1,15 @@
-﻿using MarketUz.Domain.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DiyorMarket.Domain.DTOs.Sale
+namespace MarketUz.Domain.DTOs.Sale
 {
-    public record SaleForCreateDto(
+    public record SaleForUpdateDto(
+        int Id,
         DateTime saleDate,
         int CustomerId);
-    
+
+
 }

@@ -9,8 +9,6 @@ namespace MarketUz.Domain.DTOs.Product
     public record ProductForUpdateDto(
       int Id,
       string Name,
-      string Description,
-      DateTime ExpireDate,
       int CategoryId);
  
 }

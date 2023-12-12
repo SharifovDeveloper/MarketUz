@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DiyorMarket.Domain.DTOs.Sale
+namespace MarketUz.Domain.DTOs.Supplier
 {
-    public record SaleDto(
+    public record SupplierDto(
         int Id,
-        DateTime SaleDate,
-        int CustomerId);
+        string FullName,
+        string Phone
+        );
     
 }

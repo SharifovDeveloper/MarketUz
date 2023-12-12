@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DiyorMarket.Domain\MarketUz.Domain.csproj" />
+    <ProjectReference Include="..\MarketUz.Domain\MarketUz.Domain.csproj" />
   </ItemGroup>
 
 </Project>

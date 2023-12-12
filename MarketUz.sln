@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketUz.Infrastructure", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketUz.Domain", "MarketUz.Domain\MarketUz.Domain.csproj", "{DB906B83-562C-4FE1-8BC3-C66FFF139BD6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketUz", "DiyorMarket\MarketUz.csproj", "{0DC29BF7-C2FF-4C88-8C31-B8F719C23356}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketUz", "MarketUz\MarketUz.csproj", "{9B461E2A-9FD8-4787-A61E-E983634BEEA0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{DB906B83-562C-4FE1-8BC3-C66FFF139BD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB906B83-562C-4FE1-8BC3-C66FFF139BD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB906B83-562C-4FE1-8BC3-C66FFF139BD6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0DC29BF7-C2FF-4C88-8C31-B8F719C23356}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0DC29BF7-C2FF-4C88-8C31-B8F719C23356}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0DC29BF7-C2FF-4C88-8C31-B8F719C23356}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0DC29BF7-C2FF-4C88-8C31-B8F719C23356}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B461E2A-9FD8-4787-A61E-E983634BEEA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B461E2A-9FD8-4787-A61E-E983634BEEA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B461E2A-9FD8-4787-A61E-E983634BEEA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B461E2A-9FD8-4787-A61E-E983634BEEA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
