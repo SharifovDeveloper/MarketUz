@@ -1,4 +1,5 @@
-﻿using DiyorMarket.Domain.DTOs.Product;
+﻿
+using MarketUz.Domain.DTOs.Product;
 
 namespace DiyorMarket.Domain.Interfaces.Services;
 

@@ -1,8 +1,5 @@
-﻿
-
-using DiyorMarket.Domain.DTOs.Category;
-using DiyorMarket.Domain.DTOs.Customer;
-using DiyorMarket.Domain.Entities;
+﻿using MarketUz.Domain.DTOs.Category;
+using MarketUz.Domain.DTOs.Customer;
 
 namespace DiyorMarket.Domain.Interfaces.Services
 {

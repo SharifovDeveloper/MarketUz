@@ -1,7 +1,7 @@
 ﻿
 
 using DiyorMarket.Domain.DTOs.Sale;
-using DiyorMarket.Domain.Entities;
+using MarketUz.Domain.DTOs.Sale;
 
 namespace DiyorMarket.Domain.Interfaces.Services
 {

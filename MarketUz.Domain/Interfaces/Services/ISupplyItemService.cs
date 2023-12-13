@@ -1,9 +1,4 @@
-﻿using DiyorMarket.Domain.DTOs.SupllyItem;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MarketUz.Domain.DTOs.SupplyItem;
 
 namespace DiyorMarket.Domain.Interfaces.Services
 {

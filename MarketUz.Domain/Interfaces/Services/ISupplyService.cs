@@ -1,19 +1,13 @@
-﻿using DiyorMarket.Domain.DTOs.Supplier;
-using DiyorMarket.Domain.DTOs.Supply;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MarketUz.Domain.DTOs.Supply;
 
 namespace DiyorMarket.Domain.Interfaces.Services
 {
-    public interface ISupplyService 
+    public interface ISupplyService
     {
         IEnumerable<SupplyDto> GetSupplies();
-        SupplyDto GetSupplyById (int id);
+        SupplyDto GetSupplyById(int id);
         SupplyDto CreateSupply(SupplyForCreateDto supply);
         void UpdateSupply(SupplyForUpdateDto supply);
-        void DeleteSupply(int id);  
+        void DeleteSupply(int id);
     }
 }

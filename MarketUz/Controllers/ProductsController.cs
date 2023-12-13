@@ -1,5 +1,5 @@
-﻿using MarketUz.Domain.Entities;
-using MarketUz.Domain.Interfaces.Services;
+﻿using DiyorMarket.Domain.Interfaces.Services;
+using MarketUz.Domain.Entities;
 using MarketUzApi.Services;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;

@@ -1,6 +1,4 @@
-﻿
-
-using DiyorMarket.Domain.DTOs.SaleItem;
+﻿using MarketUz.Domain.DTOs.SaleItem;
 
 namespace DiyorMarket.Domain.Interfaces.Services
 {
