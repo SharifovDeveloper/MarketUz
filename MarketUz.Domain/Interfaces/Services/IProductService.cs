@@ -1,13 +1,12 @@
-﻿using MarketUz.Domain.Entities;
+﻿using DiyorMarket.Domain.DTOs.Product;
 
-namespace MarketUz.Domain.Interfaces.Services
+namespace DiyorMarket.Domain.Interfaces.Services;
+
+public interface IProductService
 {
-    public interface IProductService
-    {
-        public IEnumerable<Product> GetAll();
-        public Product GetById(int id);
-        public Product Create(Product product);
-        public void Update(Product product);
-        public void Delete(int id);
-    }
+    IEnumerable<ProductDto> GetProducts();
+    ProductDto GetProductById(int id);
+    ProductDto CreateProduct(ProductForCreateDto product);
+    void UpdateProduct(ProductForUpdateDto product);
+    void DeleteProduct(int id); 
 }
