@@ -1,7 +1,4 @@
-﻿
-
-using MarketUz.Domain.DTOs.SaleItem;
-using MarketUz.Domain.DTOs.SupplyItem;
+﻿using MarketUz.Domain.DTOs.SupplyItem;
 
 namespace MarketUz.Domain.DTOs.Supply
 {

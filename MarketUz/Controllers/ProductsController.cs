@@ -1,4 +1,7 @@
-﻿using DiyorMarket.Domain.Interfaces.Services;
+﻿using AutoMapper;
+using DiyorMarket.Domain.Interfaces.Services;
+using MarketUz.Domain.DTOs.Category;
+using MarketUz.Domain.DTOs.Product;
 using MarketUz.Domain.Entities;
 using MarketUzApi.Services;
 using Microsoft.AspNetCore.JsonPatch;
@@ -12,111 +15,110 @@ namespace MarketUzApi.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly IProductService _service;
-        private readonly ILogger<ProductsController> _logger;
+        private readonly IMapper _mapper;
 
-        public ProductsController(IProductService productService, ILogger<ProductsController> logger)
+        public ProductsController(IMapper mapper)
         {
-            _service = productService;
-            _logger = logger;
+            _mapper = mapper;
         }
 
-        // GET: api/<ProductsController>
         [HttpGet]
-        public ActionResult<IEnumerable<Product>> Get()
-        {
-            _logger.LogInformation("getting all products");
-            return ProductsService.GetProducts();
-        }
-
-        // GET api/<ProductsController>/5
-        [HttpGet("{id}")]
-        public ActionResult<Product> Get(int id)
-        {
-            _logger.LogInformation($"Getting product with id: {id}");
-            var product = ProductsService.GetProduct(id);
-
-            if (product is null)
-            {
-                _logger.LogError($"Product with id: {id} not found.");
-                _logger.LogCritical("Database is down!!!");
-                return NotFound($"Product with id: {id} does not exist.");
-            }
-
-            return product;
-        }
-
-        // POST api/<ProductsController>
-        [HttpPost]
-        public ActionResult Post(Product product)
+        [HttpHead]
+        public ActionResult<IEnumerable<ProductDto>> Get()
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest();
-                }
-                ProductsService.Create(product);
+                var products = ProductsService.GetProducts();
 
-                return StatusCode(201, product);
+                return Ok(products);
             }
             catch (Exception ex)
             {
-                return StatusCode(500);
+                return StatusCode(500,
+                    $"There was error returning products. {ex.Message}");
             }
         }
 
-        // PUT api/<ProductsController>/5
+        [HttpGet("{id}", Name = "GetProductById")]
+        public ActionResult<ProductDto> Get(int id)
+        {
+            try
+            {
+                var product = ProductsService.GetProduct(id);
+
+                if (product is null)
+                {
+                    return NotFound($"Product with id: {id} does not exist.");
+                }
+
+                return Ok(product);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500,
+                    $"There was error getting product with id: {id}. {ex.Message}");
+            }
+        }
+
+
+
+        [HttpPost]
+        public ActionResult Post([FromBody] ProductForCreateDto product)
+        {
+            try
+            {
+                var productEntity = _mapper.Map<Product>(product);
+
+                ProductsService.Create(productEntity);
+
+                return StatusCode(201);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500,
+                    $"There was an error creating new product. {ex.Message}");
+            }
+        }
+
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Product productToUpdate)
+        public ActionResult Put(int id, [FromBody] ProductForUpdateDto product)
         {
-            ProductsService.Update(productToUpdate);
+            if (id != product.Id)
+            {
+                return BadRequest(
+                    $"Route id: {id} does not match with parameter id: {product.Id}.");
+            }
+
+            try
+            {
+                var productEntity = _mapper.Map<Product>(product);
+                ProductsService.Update(productEntity);
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500,
+                    $"There was an error updating category with id: {id}. {ex.Message}");
+
+            }
         }
 
-        [HttpPatch("{id}")]
-        public ActionResult PartiallyUpdateProduct(
-            int id,
-            JsonPatchDocument<Product> jsonPatch)
-        {
-            var product = ProductsService.GetProduct(id);
-
-            if (product is null)
-            {
-                return NotFound($"Product with id: {id} does not exist.");
-            }
-
-            var productToPatch = new Product()
-            {
-                Id = product.Id,
-                Name = product.Name,
-                Price = product.Price,
-                CategoryId = product.CategoryId,
-            };
-
-            jsonPatch.ApplyTo(productToPatch, ModelState);
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
-            if (!TryValidateModel(productToPatch))
-            {
-                return BadRequest();
-            }
-
-            product.Name = productToPatch.Name;
-            product.Price = productToPatch.Price;
-            product.CategoryId = productToPatch.CategoryId;
-
-            return Ok(productToPatch);
-        }
-
-        // DELETE api/<ProductsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
-            ProductsService.Delete(id);
+            try
+            {
+                ProductsService.Delete(id);
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500,
+                    $"There was an error deleting category with id: {id}. {ex.Message}");
+            }
         }
     }
 }

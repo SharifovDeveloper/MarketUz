@@ -1,21 +1,21 @@
-﻿using AutoMapper;
+﻿using DiyorMarket.Domain.Interfaces.Services;
 using MarketUz.Domain.DTOs.Category;
 using MarketUz.Domain.DTOs.Product;
-using MarketUz.Domain.Entities;
-using MarketUzApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MarketUzApi.Controllers
+namespace DiyorMarketApi.Controllers
 {
     [Route("api/categories")]
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private readonly IMapper _mapper;
+        private readonly ICategoryService _categoryService;
+        private readonly IProductService _productService;
 
-        public CategoriesController(IMapper mapper)
+        public CategoriesController(ICategoryService categoryService, IProductService productService)
         {
-            _mapper = mapper;
+            _categoryService = categoryService;
+            _productService = productService;
         }
 
         [HttpGet]
@@ -23,7 +23,7 @@ namespace MarketUzApi.Controllers
         {
             try
             {
-                var categories = CategoriesService.GetCategories();
+                var categories = _categoryService.GetCategories();
 
                 return Ok(categories);
             }
@@ -39,7 +39,7 @@ namespace MarketUzApi.Controllers
         {
             try
             {
-                var category = CategoriesService.GetCategory(id);
+                var category = _categoryService.GetCategoryById(id);
 
                 if (category is null)
                 {
@@ -55,32 +55,30 @@ namespace MarketUzApi.Controllers
             }
         }
 
-        [HttpGet("{id}/products")]
-        public ActionResult<ProductDto> GetProductsByCategoryId(int id)
-        {
-            try
-            {
-                var products = ProductsService.GetProducts();
+        //[HttpGet("{id}/products")]
+        //public ActionResult<ProductDto> GetProductsByCategoryId(int id)
+        //{
+        //    try
+        //    {
+        //        var products = _productService.GetProducts();
 
-                var filteredProducts = products.Where(x => x.CategoryId == id).ToList();
+        //        var filteredProducts = products.Where(x => x.CategoryId == id).ToList();
 
-                return Ok(filteredProducts);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500,
-                    $"There was an error returning products for category: {id}. {ex.Message}");
-            }
-        }
+        //        return Ok(filteredProducts);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500,
+        //            $"There was an error returning products for category: {id}. {ex.Message}");
+        //    }
+        //}
 
         [HttpPost]
         public ActionResult Post([FromBody] CategoryForCreateDto category)
         {
             try
             {
-                var categoryEntity = _mapper.Map<Category>(category);
-
-                CategoriesService.Create(categoryEntity);
+                _categoryService.CreateCategory(category);
 
                 return StatusCode(201);
             }
@@ -102,8 +100,7 @@ namespace MarketUzApi.Controllers
 
             try
             {
-                var categoryEntity = _mapper.Map<Category>(category);
-                CategoriesService.Update(categoryEntity);
+                _categoryService.UpdateCategory(category);
 
                 return NoContent();
             }
@@ -121,7 +118,7 @@ namespace MarketUzApi.Controllers
         {
             try
             {
-                CategoriesService.Delete(id);
+                _categoryService.DeleteCategory(id);
 
                 return NoContent();
             }

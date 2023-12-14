@@ -2,7 +2,7 @@
 
 namespace DiyorMarket.Domain.Interfaces.Services
 {
-    public interface ICategorySercive
+    public interface ICategoryService
     {
         IEnumerable<CategoryDto> GetCategories();
         CategoryDto GetCategoryById(int id);

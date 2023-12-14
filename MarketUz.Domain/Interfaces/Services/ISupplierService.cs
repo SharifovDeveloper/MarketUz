@@ -4,7 +4,7 @@ namespace DiyorMarket.Domain.Interfaces.Services
 {
     public interface ISupplierService
     {
-        IEnumerable<SupplierDto> GetSuppliers { get; }
+        IEnumerable<SupplierDto> GetSuppliers();
         SupplierDto GetSupplierById(int id);
         SupplierDto CreateSupplier(SupplierForCreateDto supplier);
         void UpdateSupplier(SupplierForUpdateDto supplier);
