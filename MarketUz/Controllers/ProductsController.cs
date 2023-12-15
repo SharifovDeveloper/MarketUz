@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
-using DiyorMarket.Domain.Interfaces.Services;
-using MarketUz.Domain.DTOs.Category;
 using MarketUz.Domain.DTOs.Product;
 using MarketUz.Domain.Entities;
 using MarketUzApi.Services;
-using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860

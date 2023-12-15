@@ -1,6 +1,5 @@
 ﻿using DiyorMarket.Domain.Interfaces.Services;
 using MarketUz.Domain.DTOs.Category;
-using MarketUz.Domain.DTOs.Product;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DiyorMarketApi.Controllers
