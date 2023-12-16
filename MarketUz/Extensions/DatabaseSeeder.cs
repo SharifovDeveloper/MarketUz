@@ -59,7 +59,7 @@ namespace MarketUz.Extensions
             context.SaveChanges();
         }
 
-        public static void CreateProducts(DiyorMarketDbContext context)
+        public static void CreateProducts(MarketUzDbContext context)
         {
             if (context.Products.Any()) return;
 
@@ -117,7 +117,7 @@ namespace MarketUz.Extensions
             context.Customers.AddRange(customers);
             context.SaveChanges();
         }
-        private static void CreateSales(DiyorMarketDbContext context)
+        private static void CreateSales(MarketUzDbContext context)
         {
             if (context.Sales.Any()) return;
 
@@ -141,7 +141,7 @@ namespace MarketUz.Extensions
             context.SaveChanges();
         }
 
-        private static void CreateSaleItems(DiyorMarketDbContext context)
+        private static void CreateSaleItems(MarketUzDbContext context)
         {
             if (context.SaleItems.Any()) return;
 
@@ -179,7 +179,7 @@ namespace MarketUz.Extensions
             context.SaveChanges();
         }
 
-        private static void CreateSuppliers(DiyorMarketDbContext context)
+        private static void CreateSuppliers(MarketUzDbContext context)
         {
             if (context.Suppliers.Any()) return;
             List<Supplier> suppliers = new List<Supplier>();
@@ -199,7 +199,7 @@ namespace MarketUz.Extensions
             context.SaveChanges();
         }
 
-        private static void CreateSupplies(DiyorMarketDbContext context)
+        private static void CreateSupplies(MarketUzDbContext context)
         {
             if (context.Supplies.Any()) return;
 
@@ -223,7 +223,7 @@ namespace MarketUz.Extensions
             context.SaveChanges();
         }
 
-        private static void CreateSupplyItems(DiyorMarketDbContext context)
+        private static void CreateSupplyItems(MarketUzDbContext context)
         {
             if (context.SupplyItems.Any()) return;
 

@@ -21,4 +21,8 @@
     <ProjectReference Include="..\MarketUz.Domain\MarketUz.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Persistence\Migrations\" />
+  </ItemGroup>
+
 </Project>
