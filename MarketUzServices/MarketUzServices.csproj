@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Bogus" Version="35.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MarketUz.Domain\MarketUz.Domain.csproj" />
     <ProjectReference Include="..\MarketUz.Infrastructure\MarketUz.Infrastructure.csproj" />
     <ProjectReference Include="..\MarketUz\MarketUz.csproj" />
