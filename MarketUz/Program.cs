@@ -1,5 +1,6 @@
 using AutoMapper;
 using MarketUz.Extensions;
+using MarketUz.Middlewares;
 using Microsoft.AspNetCore.StaticFiles;
 using Serilog;
 
@@ -33,6 +34,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ErrorHandlerMiddleware>();
 
 app.UseHttpsRedirection();
 

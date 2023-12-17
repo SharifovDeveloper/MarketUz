@@ -26,7 +26,7 @@ namespace MarketUz.Infrastructure.Persistence.Configurations
                 .IsRequired();
 
             builder.Property(cu => cu.PhoneNumber)
-                .HasColumnType("phone");
+                .HasMaxLength(255);
         }
 
     }

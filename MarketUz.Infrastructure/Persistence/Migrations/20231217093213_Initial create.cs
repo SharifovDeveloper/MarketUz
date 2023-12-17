@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace MarketUz.Infrastructure.Migrations
+namespace MarketUz.Infrastructure.Persistence.Migrations
 {
-    public partial class Initial_create : Migration
+    public partial class Initialcreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

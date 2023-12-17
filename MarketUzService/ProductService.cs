@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using DiyorMarket.Domain.Interfaces.Services;
-using MarketUz.Domain.DTOs.Customer;
 using MarketUz.Domain.DTOs.Product;
 using MarketUz.Domain.Entities;
+using MarketUz.Domain.Exceptions;
 using MarketUz.Infrastructure.Persistence;
 using MarketUz.ResourceParameters;
 using Microsoft.Extensions.Logging;
@@ -24,9 +24,7 @@ namespace MarketUz.Services
 
         public IEnumerable<ProductDto> GetProducts(ProductResourceParameters productResourceParameters)
         {
-            try
-            {
-                var query = _context.Products.AsQueryable();
+            var query = _context.Products.AsQueryable();
 
                 if (productResourceParameters.CategoryId is not null)
                 {
@@ -35,7 +33,7 @@ namespace MarketUz.Services
 
                 if (!string.IsNullOrWhiteSpace(productResourceParameters.SearchString))
                 {
-                    query = query.Where(x => x.Name.Contains(productResourceParameters.SearchString) 
+                    query = query.Where(x => x.Name.Contains(productResourceParameters.SearchString)
                     || x.Description.Contains(productResourceParameters.SearchString));
                 }
 
@@ -59,128 +57,56 @@ namespace MarketUz.Services
                 var productDtos = _mapper.Map<IEnumerable<ProductDto>>(products);
 
                 return productDtos;
-            }
-            catch (AutoMapperMappingException ex)
-            {
-                _logger.LogError($"There was an error mapping between Product and ProductDto", ex.Message);
-                throw;
-            }
-            catch (DbException ex)
-            {
-                _logger.LogError("Database error occured while fetching products.", ex.Message);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Something went wrong while fetching products.", ex.Message);
-                throw;
-            }
+            
+           
         }
 
         public ProductDto? GetProductById(int id)
         {
-            try
+            var product = _context.Products.FirstOrDefault(x => x.Id == id);
+            if (product is null)
             {
-                var product = _context.Products.FirstOrDefault(x => x.Id == id);
+                throw new EntityNotFoundException($"Product with id: {id} not found");
+            }
+            var productDto = _mapper.Map<ProductDto>(product);
 
-                var productDto = _mapper.Map<ProductDto>(product);
+            return productDto;
 
-                return productDto;
-            }
-            catch (AutoMapperMappingException ex)
-            {
-                _logger.LogError($"There was an error mapping between Product and ProductDto", ex.Message);
-                throw;
-            }
-            catch (DbException ex)
-            {
-                _logger.LogError($"Database error occured while fetching product with id: {id}.", ex.Message);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Something went wrong while fetching product with id: {id}.", ex.Message);
-                throw;
-            }
         }
 
         public ProductDto CreateProduct(ProductForCreateDto productToCreate)
         {
-            try
-            {
-                var productEntity = _mapper.Map<Product>(productToCreate);
 
-                _context.Products.Add(productEntity);
-                _context.SaveChanges();
+            var productEntity = _mapper.Map<Product>(productToCreate);
 
-                var productDto = _mapper.Map<ProductDto>(productEntity);
+            _context.Products.Add(productEntity);
+            _context.SaveChanges();
 
-                return productDto;
-            }
-            catch (AutoMapperMappingException ex)
-            {
-                _logger.LogError($"There was an error mapping between Product and ProductDto", ex.Message);
-                throw;
-            }
-            catch (DbException ex)
-            {
-                _logger.LogError("Database error occured while creating new product.", ex.Message);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Something went wrong while creating new product.", ex.Message);
-                throw;
-            }
+            var productDto = _mapper.Map<ProductDto>(productEntity);
+
+            return productDto;
+
         }
 
         public void UpdateProduct(ProductForUpdateDto productToUpdate)
         {
-            try
-            {
-                var productEntity = _mapper.Map<Product>(productToUpdate);
 
-                _context.Products.Update(productEntity);
-                _context.SaveChanges();
-            }
-            catch (AutoMapperMappingException ex)
-            {
-                _logger.LogError($"There was an error mapping between Product and ProductDto", ex.Message);
-                throw;
-            }
-            catch (DbException ex)
-            {
-                _logger.LogError("Database error occured while updating product.", ex.Message);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Something went wrong while updating product.", ex.Message);
-                throw;
-            }
+            var productEntity = _mapper.Map<Product>(productToUpdate);
+
+            _context.Products.Update(productEntity);
+            _context.SaveChanges();
+
         }
 
         public void DeleteProduct(int id)
         {
-            try
+            var product = _context.Products.FirstOrDefault(x => x.Id == id);
+            if (product is not null)
             {
-                var product = _context.Products.FirstOrDefault(x => x.Id == id);
-                if (product is not null)
-                {
-                    _context.Products.Remove(product);
-                }
-                _context.SaveChanges();
+                _context.Products.Remove(product);
             }
-            catch (DbException ex)
-            {
-                _logger.LogError($"Database error occured while deleting product with id: {id}.", ex.Message);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Something went wrong while deleting product with id: {id}.", ex.Message);
-                throw;
-            }
+            _context.SaveChanges();
+
         }
     }
 }

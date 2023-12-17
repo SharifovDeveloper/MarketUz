@@ -2,6 +2,7 @@
 using DiyorMarket.Domain.Interfaces.Services;
 using MarketUz.Domain.DTOs.SaleItem;
 using MarketUz.Domain.Entities;
+using MarketUz.Domain.Exceptions;
 using MarketUz.Infrastructure.Persistence;
 using Microsoft.Extensions.Logging;
 using System.Data.Common;
@@ -23,56 +24,27 @@ namespace DiyorMarket.Services
 
         public IEnumerable<SaleItemDto> GetSaleItems()
         {
-            try
-            {
-                var saleItems = _context.SaleItems.ToList();
 
-                var saleItemDtos = _mapper.Map<IEnumerable<SaleItemDto>>(saleItems);
+            var saleItems = _context.SaleItems.ToList();
 
-                return saleItemDtos;
-            }
-            catch (AutoMapperMappingException ex)
-            {
-                _logger.LogError($"There was an error mapping between SaleItem and SaleItemDto", ex.Message);
-                throw;
-            }
-            catch (DbException ex)
-            {
-                _logger.LogError("Database error occured while fetching saleItems.", ex.Message);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Something went wrong while fetching saleItems.", ex.Message);
-                throw;
-            }
+            var saleItemDtos = _mapper.Map<IEnumerable<SaleItemDto>>(saleItems);
+
+            return saleItemDtos;
+
         }
 
         public SaleItemDto? GetSaleItemById(int id)
         {
-            try
-            {
-                var saleItem = _context.SaleItems.FirstOrDefault(x => x.Id == id);
 
-                var saleItemDto = _mapper.Map<SaleItemDto>(saleItem);
+            var saleItem = _context.SaleItems.FirstOrDefault(x => x.Id == id);
+            if (saleItem is null)
+            {
+                throw new EntityNotFoundException($"SaleItem with id: {id} not found");
+            }
+            var saleItemDto = _mapper.Map<SaleItemDto>(saleItem);
 
-                return saleItemDto;
-            }
-            catch (AutoMapperMappingException ex)
-            {
-                _logger.LogError($"There was an error mapping between SaleItem and SaleItemDto", ex.Message);
-                throw;
-            }
-            catch (DbException ex)
-            {
-                _logger.LogError($"Database error occured while fetching saleItem with id: {id}.", ex.Message);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Something went wrong while fetching saleItem with id: {id}.", ex.Message);
-                throw;
-            }
+            return saleItemDto;
+
         }
 
         public SaleItemDto CreateSaleItem(SaleItemForCreateDto saleItemToCreate)
@@ -154,6 +126,6 @@ namespace DiyorMarket.Services
             }
         }
 
-      
+
     }
 }

@@ -2,9 +2,9 @@
 using DiyorMarket.Domain.Interfaces.Services;
 using MarketUz.Domain.DTOs.Supply;
 using MarketUz.Domain.Entities;
+using MarketUz.Domain.Exceptions;
 using MarketUz.Infrastructure.Persistence;
 using Microsoft.Extensions.Logging;
-using System.Data.Common;
 
 namespace DiyorMarket.Services
 {
@@ -23,135 +23,61 @@ namespace DiyorMarket.Services
 
         public IEnumerable<SupplyDto> GetSupplies()
         {
-            try
-            {
-                var supplies = _context.Supplies.ToList();
 
-                var supplyDtos = _mapper.Map<IEnumerable<SupplyDto>>(supplies);
+            var supplies = _context.Supplies.ToList();
 
-                return supplyDtos;
-            }
-            catch (AutoMapperMappingException ex)
-            {
-                _logger.LogError($"There was an error mapping between Supply and SupplyDto", ex.Message);
-                throw;
-            }
-            catch (DbException ex)
-            {
-                _logger.LogError("Database error occured while fetching supply.", ex.Message);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Something went wrong while fetching supply.", ex.Message);
-                throw;
-            }
+            var supplyDtos = _mapper.Map<IEnumerable<SupplyDto>>(supplies);
+
+            return supplyDtos;
+
         }
 
         public SupplyDto? GetSupplyById(int id)
         {
-            try
-            {
-                var supply = _context.Supplies.FirstOrDefault(x => x.Id == id);
 
-                var supplyDto = _mapper.Map<SupplyDto>(supply);
+            var supply = _context.Supplies.FirstOrDefault(x => x.Id == id);
+            if (supply is null)
+            {
+                throw new EntityNotFoundException($"Supply with id: {id} not found");
+            }
+            var supplyDto = _mapper.Map<SupplyDto>(supply);
 
-                return supplyDto;
-            }
-            catch (AutoMapperMappingException ex)
-            {
-                _logger.LogError($"There was an error mapping between Supply and SupplyDto", ex.Message);
-                throw;
-            }
-            catch (DbException ex)
-            {
-                _logger.LogError($"Database error occured while fetching supply with id: {id}.", ex.Message);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Something went wrong while fetching supply with id: {id}.", ex.Message);
-                throw;
-            }
+            return supplyDto;
         }
 
         public SupplyDto CreateSupply(SupplyForCreateDto supplyToCreate)
         {
-            try
-            {
-                var supplyEntity = _mapper.Map<Supply>(supplyToCreate);
 
-                _context.Supplies.Add(supplyEntity);
-                _context.SaveChanges();
+            var supplyEntity = _mapper.Map<Supply>(supplyToCreate);
 
-                var supplyDto = _mapper.Map<SupplyDto>(supplyEntity);
+            _context.Supplies.Add(supplyEntity);
+            _context.SaveChanges();
 
-                return supplyDto;
-            }
-            catch (AutoMapperMappingException ex)
-            {
-                _logger.LogError($"There was an error mapping between Supply and SupplyDto", ex.Message);
-                throw;
-            }
-            catch (DbException ex)
-            {
-                _logger.LogError("Database error occured while creating new supply.", ex.Message);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Something went wrong while creating new supply.", ex.Message);
-                throw;
-            }
+            var supplyDto = _mapper.Map<SupplyDto>(supplyEntity);
+
+            return supplyDto;
+
         }
 
         public void UpdateSupply(SupplyForUpdateDto supplyToUpdate)
         {
-            try
-            {
-                var supplyEntity = _mapper.Map<Supply>(supplyToUpdate);
 
-                _context.Supplies.Update(supplyEntity);
-                _context.SaveChanges();
-            }
-            catch (AutoMapperMappingException ex)
-            {
-                _logger.LogError($"There was an error mapping between Supply and SupplyDto", ex.Message);
-                throw;
-            }
-            catch (DbException ex)
-            {
-                _logger.LogError("Database error occured while updating supply.", ex.Message);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Something went wrong while updating supply.", ex.Message);
-                throw;
-            }
+            var supplyEntity = _mapper.Map<Supply>(supplyToUpdate);
+
+            _context.Supplies.Update(supplyEntity);
+            _context.SaveChanges();
+
         }
 
         public void DeleteSupply(int id)
         {
-            try
+
+            var supply = _context.Supplies.FirstOrDefault(x => x.Id == id);
+            if (supply is not null)
             {
-                var supply = _context.Supplies.FirstOrDefault(x => x.Id == id);
-                if (supply is not null)
-                {
-                    _context.Supplies.Remove(supply);
-                }
-                _context.SaveChanges();
+                _context.Supplies.Remove(supply);
             }
-            catch (DbException ex)
-            {
-                _logger.LogError($"Database error occured while deleting supply with id: {id}.", ex.Message);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Something went wrong while deleting supply with id: {id}.", ex.Message);
-                throw;
-            }
+            _context.SaveChanges();
         }
     }
 }

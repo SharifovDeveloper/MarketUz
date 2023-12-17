@@ -2,9 +2,9 @@
 using DiyorMarket.Domain.Interfaces.Services;
 using MarketUz.Domain.DTOs.Customer;
 using MarketUz.Domain.Entities;
+using MarketUz.Domain.Exceptions;
 using MarketUz.Infrastructure.Persistence;
 using Microsoft.Extensions.Logging;
-using System.Data.Common;
 
 namespace MarketUz.Services
 {
@@ -23,135 +23,63 @@ namespace MarketUz.Services
 
         public IEnumerable<CustomerDto> GetCustomers()
         {
-            try
-            {
-                var customers = _context.Customers.ToList();
 
-                var customerDtos = _mapper.Map<IEnumerable<CustomerDto>>(customers);
+            var customers = _context.Customers.ToList();
 
-                return customerDtos;
-            }
-            catch (AutoMapperMappingException ex)
-            {
-                _logger.LogError($"There was an error mapping between Customer and CustomerDto", ex.Message);
-                throw;
-            }
-            catch (DbException ex)
-            {
-                _logger.LogError("Database error occured while fetching customers.", ex.Message);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Something went wrong while fetching customers.", ex.Message);
-                throw;
-            }
+            var customerDtos = _mapper.Map<IEnumerable<CustomerDto>>(customers);
+
+            return customerDtos;
         }
 
         public CustomerDto? GetCustomerById(int id)
         {
-            try
-            {
-                var customer = _context.Customers.FirstOrDefault(x => x.Id == id);
 
-                var customerDto = _mapper.Map<CustomerDto>(customer);
+            var customer = _context.Customers.FirstOrDefault(x => x.Id == id);
+            if (customer is null)
+            {
+                throw new EntityNotFoundException($"Customer with id: {id} not found");
+            }
 
-                return customerDto;
-            }
-            catch (AutoMapperMappingException ex)
-            {
-                _logger.LogError($"There was an error mapping between Customer and CustomerDto", ex.Message);
-                throw;
-            }
-            catch (DbException ex)
-            {
-                _logger.LogError($"Database error occured while fetching customer with id: {id}.", ex.Message);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Something went wrong while fetching customer with id: {id}.", ex.Message);
-                throw;
-            }
+            var customerDto = _mapper.Map<CustomerDto>(customer);
+
+            return customerDto;
+
         }
 
         public CustomerDto CreateCustomer(CustomerForCreateDto customerToCreate)
         {
-            try
-            {
-                var customerEntity = _mapper.Map<Customer>(customerToCreate);
 
-                _context.Customers.Add(customerEntity);
-                _context.SaveChanges();
+            var customerEntity = _mapper.Map<Customer>(customerToCreate);
 
-                var customerDto = _mapper.Map<CustomerDto>(customerEntity);
+            _context.Customers.Add(customerEntity);
+            _context.SaveChanges();
 
-                return customerDto;
-            }
-            catch (AutoMapperMappingException ex)
-            {
-                _logger.LogError($"There was an error mapping between Customer and CustomerDto", ex.Message);
-                throw;
-            }
-            catch (DbException ex)
-            {
-                _logger.LogError("Database error occured while creating new customer.", ex.Message);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Something went wrong while creating new customer.", ex.Message);
-                throw;
-            }
+            var customerDto = _mapper.Map<CustomerDto>(customerEntity);
+
+            return customerDto;
+
         }
 
         public void UpdateCustomer(CustomerForUpdateDto customerToUpdate)
         {
-            try
-            {
-                var customerEntity = _mapper.Map<Customer>(customerToUpdate);
 
-                _context.Customers.Update(customerEntity);
-                _context.SaveChanges();
-            }
-            catch (AutoMapperMappingException ex)
-            {
-                _logger.LogError($"There was an error mapping between Customer and CustomerDto", ex.Message);
-                throw;
-            }
-            catch (DbException ex)
-            {
-                _logger.LogError("Database error occured while updating customer.", ex.Message);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Something went wrong while updating customer.", ex.Message);
-                throw;
-            }
+            var customerEntity = _mapper.Map<Customer>(customerToUpdate);
+
+            _context.Customers.Update(customerEntity);
+            _context.SaveChanges();
+
         }
 
         public void DeleteCustomer(int id)
         {
-            try
+
+            var customer = _context.Customers.FirstOrDefault(x => x.Id == id);
+            if (customer is not null)
             {
-                var customer = _context.Customers.FirstOrDefault(x => x.Id == id);
-                if (customer is not null)
-                {
-                    _context.Customers.Remove(customer);
-                }
-                _context.SaveChanges();
+                _context.Customers.Remove(customer);
             }
-            catch (DbException ex)
-            {
-                _logger.LogError($"Database error occured while deleting customer with id: {id}.", ex.Message);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Something went wrong while deleting customer with id: {id}.", ex.Message);
-                throw;
-            }
+            _context.SaveChanges();
         }
+
     }
 }

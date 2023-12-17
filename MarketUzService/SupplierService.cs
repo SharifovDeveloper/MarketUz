@@ -2,9 +2,9 @@
 using DiyorMarket.Domain.Interfaces.Services;
 using MarketUz.Domain.DTOs.Supplier;
 using MarketUz.Domain.Entities;
+using MarketUz.Domain.Exceptions;
 using MarketUz.Infrastructure.Persistence;
 using Microsoft.Extensions.Logging;
-using System.Data.Common;
 
 namespace DiyorMarket.Services
 {
@@ -23,135 +23,60 @@ namespace DiyorMarket.Services
 
         public IEnumerable<SupplierDto> GetSuppliers()
         {
-            try
-            {
-                var suppliers = _context.Suppliers.ToList();
+            var suppliers = _context.Suppliers.ToList();
 
-                var supplierDtos = _mapper.Map<IEnumerable<SupplierDto>>(suppliers);
+            var supplierDtos = _mapper.Map<IEnumerable<SupplierDto>>(suppliers);
 
-                return supplierDtos;
-            }
-            catch (AutoMapperMappingException ex)
-            {
-                _logger.LogError($"There was an error mapping between Supplier and SupplierDto", ex.Message);
-                throw;
-            }
-            catch (DbException ex)
-            {
-                _logger.LogError("Database error occured while fetching suppliers.", ex.Message);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Something went wrong while fetching suppliers.", ex.Message);
-                throw;
-            }
+            return supplierDtos;
+
         }
 
         public SupplierDto? GetSupplierById(int id)
         {
-            try
+            var supplier = _context.Suppliers.FirstOrDefault(x => x.Id == id);
+            if (supplier is null)
             {
-                var supplier = _context.Suppliers.FirstOrDefault(x => x.Id == id);
+                throw new EntityNotFoundException($"Supplier with id: {id} not found");
+            }
+            var supplierDto = _mapper.Map<SupplierDto>(supplier);
 
-                var supplierDto = _mapper.Map<SupplierDto>(supplier);
+            return supplierDto;
 
-                return supplierDto;
-            }
-            catch (AutoMapperMappingException ex)
-            {
-                _logger.LogError($"There was an error mapping between Supplier and SupplierDto", ex.Message);
-                throw;
-            }
-            catch (DbException ex)
-            {
-                _logger.LogError($"Database error occured while fetching supplier with id: {id}.", ex.Message);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Something went wrong while fetching supplier with id: {id}.", ex.Message);
-                throw;
-            }
         }
 
         public SupplierDto CreateSupplier(SupplierForCreateDto supplierToCreate)
         {
-            try
-            {
-                var supplierEntity = _mapper.Map<Supplier>(supplierToCreate);
 
-                _context.Suppliers.Add(supplierEntity);
-                _context.SaveChanges();
+            var supplierEntity = _mapper.Map<Supplier>(supplierToCreate);
 
-                var supplierDto = _mapper.Map<SupplierDto>(supplierEntity);
+            _context.Suppliers.Add(supplierEntity);
+            _context.SaveChanges();
 
-                return supplierDto;
-            }
-            catch (AutoMapperMappingException ex)
-            {
-                _logger.LogError($"There was an error mapping between Supplier and SupplierDto", ex.Message);
-                throw;
-            }
-            catch (DbException ex)
-            {
-                _logger.LogError("Database error occured while creating new supplier.", ex.Message);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Something went wrong while creating new supplier.", ex.Message);
-                throw;
-            }
+            var supplierDto = _mapper.Map<SupplierDto>(supplierEntity);
+
+            return supplierDto;
+
         }
 
         public void UpdateSupplier(SupplierForUpdateDto supplierToUpdate)
         {
-            try
-            {
-                var supplierEntity = _mapper.Map<Supplier>(supplierToUpdate);
 
-                _context.Suppliers.Update(supplierEntity);
-                _context.SaveChanges();
-            }
-            catch (AutoMapperMappingException ex)
-            {
-                _logger.LogError($"There was an error mapping between Supplier and SupplierDto", ex.Message);
-                throw;
-            }
-            catch (DbException ex)
-            {
-                _logger.LogError("Database error occured while updating supplier.", ex.Message);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Something went wrong while updating supplier.", ex.Message);
-                throw;
-            }
+            var supplierEntity = _mapper.Map<Supplier>(supplierToUpdate);
+
+            _context.Suppliers.Update(supplierEntity);
+            _context.SaveChanges();
+
         }
 
         public void DeleteSupplier(int id)
         {
-            try
+
+            var supplier = _context.Suppliers.FirstOrDefault(x => x.Id == id);
+            if (supplier is not null)
             {
-                var supplier = _context.Suppliers.FirstOrDefault(x => x.Id == id);
-                if (supplier is not null)
-                {
-                    _context.Suppliers.Remove(supplier);
-                }
-                _context.SaveChanges();
+                _context.Suppliers.Remove(supplier);
             }
-            catch (DbException ex)
-            {
-                _logger.LogError($"Database error occured while deleting supplier with id: {id}.", ex.Message);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Something went wrong while deleting supplier with id: {id}.", ex.Message);
-                throw;
-            }
+
         }
     }
 }
