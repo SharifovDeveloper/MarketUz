@@ -8,9 +8,9 @@ namespace DiyorMarket.Domain.Interfaces.Services
     public interface ISaleService
     {
         IEnumerable<SaleDto> GetSales();
-        SaleDto GetSale(int id);
-        SaleDto CreateSale(SaleForCreateDto sale);
-        void UpdateSale(SaleForUpdateDto sale);
+        SaleDto? GetSaleById(int id);
+        SaleDto CreateSale(SaleForCreateDto saleToCreate);
+        void UpdateSale(SaleForUpdateDto saleToUpdate);
         void DeleteSale(int id);
     }
 }

@@ -5,9 +5,9 @@ namespace DiyorMarket.Domain.Interfaces.Services
     public interface ISupplyItemService
     {
         IEnumerable<SupplyItemDto> GetSupplyItems();
-        SupplyItemDto GetSupplyItem(int id);
-        SupplyItemDto CreateSupplyItem(SupplyItemForCreateDto createDto);
-        void UpdateSupplyItem(SupplyItemForUpdateDto updateDto);
+        SupplyItemDto? GetSupplyItemById(int id);
+        SupplyItemDto CreateSupplyItem(SupplyItemForCreateDto supplyItemToCreate);
+        void UpdateSupplyItem(SupplyItemForUpdateDto supplyItemToUpdate);
         void DeleteSupplyItem(int id);
     }
 }

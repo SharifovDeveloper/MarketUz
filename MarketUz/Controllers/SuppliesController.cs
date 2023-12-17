@@ -1,6 +1,5 @@
-﻿using DiyorMarket.Domain.DTOs.Supplier;
-using DiyorMarket.Domain.DTOs.Supply;
-using DiyorMarket.Domain.Interfaces.Services;
+﻿using DiyorMarket.Domain.Interfaces.Services;
+using MarketUz.Domain.DTOs.Supply;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DiyorMarket.Controllers
@@ -8,7 +7,7 @@ namespace DiyorMarket.Controllers
     [Route("api/supplies")]
     [ApiController]
     public class SuppliesController : Controller
-    {      
+    {
         private readonly ISupplyService _supplyService;
         public SuppliesController(ISupplyService supplyService)
         {

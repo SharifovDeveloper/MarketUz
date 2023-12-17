@@ -1,14 +1,8 @@
 ﻿using AutoMapper;
-using DiyorMarket.Domain.DTOs.Category;
-using DiyorMarket.Domain.DTOs.Product;
-using DiyorMarket.Domain.Entities;
 using DiyorMarket.Domain.Interfaces.Services;
-using DiyorMarket.ResourceParameters;
-using DiyorMarket.Services;
-using Microsoft.AspNetCore.JsonPatch;
+using MarketUz.Domain.DTOs.Product;
+using MarketUz.ResourceParameters;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata;
-using System.Runtime.CompilerServices;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -110,46 +104,7 @@ namespace DiyorMarketApi.Controllers
             }
         }
 
-        [HttpPatch("{id}")]
-        public ActionResult PartiallyUpdateProduct(
-            int id,
-            JsonPatchDocument<Product> jsonPatch)
-        {
-            var product = _productService.GetProductById(id);
 
-            if (product is null)
-            {
-                return NotFound($"Product with id: {id} does not exist.");
-            }
-
-            var productToPatch = new Product()
-            {
-                Id = product.Id,
-                Name = product.Name,
-                Price = product.Price,
-                CategoryId = product.CategoryId,
-            };
-
-            jsonPatch.ApplyTo(productToPatch, ModelState);
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
-            if (!TryValidateModel(productToPatch))
-            {
-                return BadRequest();
-            }
-
-            var productEntity = _mapper.Map<Product>(product);
-
-            productEntity.Name = productToPatch.Name;
-            productEntity.Price = productToPatch.Price;
-            productEntity.CategoryId = productToPatch.CategoryId;
-
-            return Ok(productToPatch);
-        }
 
         // DELETE api/<ProductsController>/5
         [HttpDelete("{id}")]

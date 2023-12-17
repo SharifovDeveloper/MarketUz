@@ -6,9 +6,9 @@ namespace DiyorMarket.Domain.Interfaces.Services
     public interface ICustomerService
     {
         IEnumerable<CustomerDto> GetCustomers();
-        CustomerDto GetCustomerById(int customerId);
-        CategoryDto CreateCustomer(CustomerForCreateDto custumer);
-        void UpdateCustomer(CustomerForUpdateDto custumer);
-        void DeleteCustomer(int customerId);
+        CustomerDto? GetCustomerById(int id);
+        CustomerDto CreateCustomer(CustomerForCreateDto customerToCreate);
+        void UpdateCustomer(CustomerForUpdateDto customerToUpdate);
+        void DeleteCustomer(int id);
     }
 }

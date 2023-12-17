@@ -4,6 +4,8 @@ using MarketUz.Infrastructure.Persistence;
 using MarketUz.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using MarketUz.Services;
+using DiyorMarket.Services;
 
 namespace MarketUz.Extensions
 {
@@ -20,14 +22,14 @@ namespace MarketUz.Extensions
             services.AddScoped<ISupplierRepository, SupplierRepository>();
             services.AddScoped<ISupplyRepository, SupplyRepository>();
             services.AddScoped<ISupplyItemRepository, SupplyItemRepository>();
-            //services.AddScoped<ICategoryService, >();
-            //services.AddScoped<IProductService, ProductService>();
-            //services.AddScoped<ICustomerService, CustomerService>();
-            //services.AddScoped<ISaleService, SaleService>();
-            //services.AddScoped<ISaleItemService, SaleItemService>();
-            //services.AddScoped<ISupplierService, SupplierService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<ISaleService, SaleService>();
+            services.AddScoped<ISaleItemService, SaleItemService>();
+            services.AddScoped<ISupplierService, SupplierService>();
 
-            //return services;
+            return services;
         }
 
         public static IServiceCollection ConfigureLogger(this IServiceCollection services)

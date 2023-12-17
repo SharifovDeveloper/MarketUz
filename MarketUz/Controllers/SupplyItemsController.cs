@@ -1,7 +1,5 @@
-﻿using DiyorMarket.Domain.DTOs.Supply;
-using DiyorMarket.Domain.DTOs.SupplyItem;
-using DiyorMarket.Domain.Interfaces.Services;
-using DiyorMarket.Services;
+﻿using DiyorMarket.Domain.Interfaces.Services;
+using MarketUz.Domain.DTOs.SupplyItem;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DiyorMarket.Controllers

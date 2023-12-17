@@ -5,8 +5,9 @@ using MarketUz.Domain.Entities;
 using MarketUz.Domain.Exceptions;
 using MarketUz.Infrastructure.Persistence;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
-namespace DiyorMarket.Services
+namespace MarketUz.Services
 {
     public class CategoryService : ICategoryService
     {

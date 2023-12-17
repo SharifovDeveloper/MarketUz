@@ -1,7 +1,5 @@
-﻿using DiyorMarket.Domain.DTOs.Category;
-using DiyorMarket.Domain.DTOs.Customer;
-using DiyorMarket.Domain.Interfaces.Services;
-using DiyorMarket.Services;
+﻿using DiyorMarket.Domain.Interfaces.Services;
+using MarketUz.Domain.DTOs.Customer;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DiyorMarket.Controllers
