@@ -1,4 +1,5 @@
-﻿using MarketUz.Domain.Interfaces.Repositories;
+﻿using DiyorMarket.Domain.Interfaces.Services;
+using MarketUz.Domain.Interfaces.Repositories;
 using MarketUz.Infrastructure.Persistence;
 using MarketUz.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -13,8 +14,20 @@ namespace MarketUz.Extensions
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICommonRepository, CommonRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<ISaleRepository, SaleRepository>();
+            services.AddScoped<ISaleItemRepository, SaleItemRepository>();
+            services.AddScoped<ISupplierRepository, SupplierRepository>();
+            services.AddScoped<ISupplyRepository, SupplyRepository>();
+            services.AddScoped<ISupplyItemRepository, SupplyItemRepository>();
+            //services.AddScoped<ICategoryService, >();
+            //services.AddScoped<IProductService, ProductService>();
+            //services.AddScoped<ICustomerService, CustomerService>();
+            //services.AddScoped<ISaleService, SaleService>();
+            //services.AddScoped<ISaleItemService, SaleItemService>();
+            //services.AddScoped<ISupplierService, SupplierService>();
 
-            return services;
+            //return services;
         }
 
         public static IServiceCollection ConfigureLogger(this IServiceCollection services)
@@ -31,8 +44,10 @@ namespace MarketUz.Extensions
 
         public static IServiceCollection ConfigureDatabaseContext(this IServiceCollection services)
         {
+            var builder = WebApplication.CreateBuilder();
+
             services.AddDbContext<MarketUzDbContext>(options =>
-                options.UseSqlServer(""));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("MarketUzConnection")));
 
             return services;
         }

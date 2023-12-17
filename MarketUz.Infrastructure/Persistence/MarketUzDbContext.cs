@@ -13,12 +13,12 @@ namespace MarketUz.Infrastructure.Persistence
         public virtual DbSet<SaleItem> SaleItems { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<Supply> Supplies { get; set; }
-        public virtual DbSet<SupplyItem> SupplyItems { get; set; }
+        public virtual DbSet<SupplyItem> SupplyItems { get; set; }  
 
         public MarketUzDbContext(DbContextOptions<MarketUzDbContext> options)
             : base(options)
         {
-            Database.Migrate();
+            //Database.Migrate();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

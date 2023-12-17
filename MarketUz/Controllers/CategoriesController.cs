@@ -1,5 +1,6 @@
 ﻿using DiyorMarket.Domain.Interfaces.Services;
 using MarketUz.Domain.DTOs.Category;
+using MarketUz.Domain.DTOs.Product;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DiyorMarketApi.Controllers
@@ -20,72 +21,35 @@ namespace DiyorMarketApi.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<CategoryDto>> Get()
         {
-            try
-            {
-                var categories = _categoryService.GetCategories();
+            var categories = _categoryService.GetCategories();
 
-                return Ok(categories);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500,
-                    $"There was error returning categories. {ex.Message}");
-            }
+            return Ok(categories);
         }
 
         [HttpGet("{id}", Name = "GetCategoryById")]
         public ActionResult<CategoryDto> Get(int id)
         {
-            try
-            {
-                var category = _categoryService.GetCategoryById(id);
+            var category = _categoryService.GetCategoryById(id);
 
-                if (category is null)
-                {
-                    return NotFound($"Category with id: {id} does not exist.");
-                }
-
-                return Ok(category);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500,
-                    $"There was error getting category with id: {id}. {ex.Message}");
-            }
+            return Ok(category);
         }
 
-        //[HttpGet("{id}/products")]
-        //public ActionResult<ProductDto> GetProductsByCategoryId(int id)
-        //{
-        //    try
-        //    {
-        //        var products = _productService.GetProducts();
+        [HttpGet("{id}/products")]
+        public ActionResult<ProductDto> GetProductsByCategoryId(
+            int id,
+            ProductResourceParameters productResourceParameters)
+        {
+            var products = _productService.GetProducts(productResourceParameters);
 
-        //        var filteredProducts = products.Where(x => x.CategoryId == id).ToList();
-
-        //        return Ok(filteredProducts);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500,
-        //            $"There was an error returning products for category: {id}. {ex.Message}");
-        //    }
-        //}
+            return Ok(products);
+        }
 
         [HttpPost]
         public ActionResult Post([FromBody] CategoryForCreateDto category)
         {
-            try
-            {
-                _categoryService.CreateCategory(category);
+            _categoryService.CreateCategory(category);
 
-                return StatusCode(201);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500,
-                    $"There was an error creating new category. {ex.Message}");
-            }
+            return StatusCode(201);
         }
 
         [HttpPut("{id}")]
@@ -97,35 +61,17 @@ namespace DiyorMarketApi.Controllers
                     $"Route id: {id} does not match with parameter id: {category.Id}.");
             }
 
-            try
-            {
-                _categoryService.UpdateCategory(category);
+            _categoryService.UpdateCategory(category);
 
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-
-                return StatusCode(500,
-                    $"There was an error updating category with id: {id}. {ex.Message}");
-
-            }
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            try
-            {
-                _categoryService.DeleteCategory(id);
+            _categoryService.DeleteCategory(id);
 
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500,
-                    $"There was an error deleting category with id: {id}. {ex.Message}");
-            }
+            return NoContent();
         }
     }
 }

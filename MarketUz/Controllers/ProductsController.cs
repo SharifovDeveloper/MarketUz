@@ -1,31 +1,40 @@
 ﻿using AutoMapper;
-using MarketUz.Domain.DTOs.Product;
-using MarketUz.Domain.Entities;
-using MarketUzApi.Services;
+using DiyorMarket.Domain.DTOs.Category;
+using DiyorMarket.Domain.DTOs.Product;
+using DiyorMarket.Domain.Entities;
+using DiyorMarket.Domain.Interfaces.Services;
+using DiyorMarket.ResourceParameters;
+using DiyorMarket.Services;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata;
+using System.Runtime.CompilerServices;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace MarketUzApi.Controllers
+namespace DiyorMarketApi.Controllers
 {
     [Route("api/products")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
+        private readonly IProductService _productService;
         private readonly IMapper _mapper;
 
-        public ProductsController(IMapper mapper)
+        public ProductsController(IProductService productService, IMapper mapper)
         {
+            _productService = productService;
             _mapper = mapper;
         }
 
+        // GET: api/<ProductsController>
         [HttpGet]
-        [HttpHead]
-        public ActionResult<IEnumerable<ProductDto>> Get()
+        public ActionResult<IEnumerable<ProductDto>> GetProductsAsync(
+            [FromQuery] ProductResourceParameters productResourceParameters)
         {
             try
             {
-                var products = ProductsService.GetProducts();
+                var products = _productService.GetProducts(productResourceParameters);
 
                 return Ok(products);
             }
@@ -36,12 +45,14 @@ namespace MarketUzApi.Controllers
             }
         }
 
+        // GET api/<ProductsController>/5
         [HttpGet("{id}", Name = "GetProductById")]
         public ActionResult<ProductDto> Get(int id)
         {
+            throw new Exception();
             try
             {
-                var product = ProductsService.GetProduct(id);
+                var product = _productService.GetProductById(id);
 
                 if (product is null)
                 {
@@ -57,16 +68,13 @@ namespace MarketUzApi.Controllers
             }
         }
 
-
-
+        // POST api/<ProductsController>
         [HttpPost]
         public ActionResult Post([FromBody] ProductForCreateDto product)
         {
             try
             {
-                var productEntity = _mapper.Map<Product>(product);
-
-                ProductsService.Create(productEntity);
+                _productService.CreateProduct(product);
 
                 return StatusCode(201);
             }
@@ -77,6 +85,7 @@ namespace MarketUzApi.Controllers
             }
         }
 
+        // PUT api/<ProductsController>/5
         [HttpPut("{id}")]
         public ActionResult Put(int id, [FromBody] ProductForUpdateDto product)
         {
@@ -88,8 +97,7 @@ namespace MarketUzApi.Controllers
 
             try
             {
-                var productEntity = _mapper.Map<Product>(product);
-                ProductsService.Update(productEntity);
+                _productService.UpdateProduct(product);
 
                 return NoContent();
             }
@@ -97,25 +105,63 @@ namespace MarketUzApi.Controllers
             {
 
                 return StatusCode(500,
-                    $"There was an error updating category with id: {id}. {ex.Message}");
+                    $"There was an error updating product with id: {id}. {ex.Message}");
 
             }
         }
 
-        [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        [HttpPatch("{id}")]
+        public ActionResult PartiallyUpdateProduct(
+            int id,
+            JsonPatchDocument<Product> jsonPatch)
         {
-            try
-            {
-                ProductsService.Delete(id);
+            var product = _productService.GetProductById(id);
 
-                return NoContent();
-            }
-            catch (Exception ex)
+            if (product is null)
             {
-                return StatusCode(500,
-                    $"There was an error deleting category with id: {id}. {ex.Message}");
+                return NotFound($"Product with id: {id} does not exist.");
             }
+
+            var productToPatch = new Product()
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Price = product.Price,
+                CategoryId = product.CategoryId,
+            };
+
+            jsonPatch.ApplyTo(productToPatch, ModelState);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            if (!TryValidateModel(productToPatch))
+            {
+                return BadRequest();
+            }
+
+            var productEntity = _mapper.Map<Product>(product);
+
+            productEntity.Name = productToPatch.Name;
+            productEntity.Price = productToPatch.Price;
+            productEntity.CategoryId = productToPatch.CategoryId;
+
+            return Ok(productToPatch);
         }
+
+        // DELETE api/<ProductsController>/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _productService.DeleteProduct(id);
+        }
+    }
+
+    public class ProductParams
+    {
+        public int Id { get; set; }
+        public int CategoryId { get; set; }
     }
 }
