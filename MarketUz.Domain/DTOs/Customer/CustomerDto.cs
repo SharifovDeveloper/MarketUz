@@ -8,10 +8,13 @@ using System.Threading.Tasks;
 
 namespace MarketUz.Domain.DTOs.Customer
 {
-    public record CustomerDto(
-        int Id,
-        string FullName,
-        string Phone,
-        ICollection<SaleDto> Sales);
+    public class CustomerDto
+    {
+        public int Id { get; set; }
+        public  string FullName { get; set; }
+        public string Phone { get; set; }
+        public virtual ICollection<SaleDto> Sales { get; set; }
+    }
+    
    
 }

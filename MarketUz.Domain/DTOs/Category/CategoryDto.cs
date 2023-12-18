@@ -2,9 +2,11 @@
 
 namespace MarketUz.Domain.DTOs.Category
 {
-    public record CategoryDto(
-        int Id,
-        string Name,
-        int NumberOfProducts,
-        ICollection<ProductDto> Products);
+    public class CategoryDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int NumberOfProducts { get; set; }
+        public ICollection<ProductDto> Products { get; set; }
+    }
 }

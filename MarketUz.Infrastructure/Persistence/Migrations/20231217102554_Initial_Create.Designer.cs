@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace MarketUz.Infrastructure.Persistence.Migrations
+namespace MarketUz.Infrastructure.persistence.Migrations
 {
     [DbContext(typeof(MarketUzDbContext))]
-    [Migration("20231217093213_Initial create")]
-    partial class Initialcreate
+    [Migration("20231217102554_Initial_Create")]
+    partial class Initial_Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -62,7 +62,8 @@ namespace MarketUz.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasColumnType("phone");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id");
 
@@ -177,7 +178,8 @@ namespace MarketUz.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasColumnType("phone");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id");
 

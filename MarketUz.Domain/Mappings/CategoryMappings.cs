@@ -8,8 +8,7 @@ namespace MarketUz.Domain.Mappings
     {
         public CategoryMappings() 
         {
-            CreateMap<Category, CategoryDto>()
-                .ForMember(x => x.NumberOfProducts, r => r.MapFrom(x => x.Products.Count));
+            CreateMap<Category, CategoryDto>();
             CreateMap<CategoryDto, Category>();
             CreateMap<CategoryForCreateDto, Category>();
             CreateMap<CategoryForUpdateDto, Category>();

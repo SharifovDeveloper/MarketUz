@@ -2,11 +2,12 @@
 
 namespace MarketUz.Domain.DTOs.Supply
 {
-    public record SupplyDto(
-        int Id,
-        DateTime SupplyDate,
-        int SupplierId,
-        ICollection<SupplyItemDto> Sales);
-
+    public class SupplyDto
+    {
+        public int Id { get; set; }
+        public DateTime SupplyDate { get; set; }
+        public int SupplierId { get; set; }
+        public virtual ICollection<SupplyItemDto> SupplItems { get; set; }
+    }
 
 }
