@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketUz.Domain", "MarketUz
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketUz", "MarketUz\MarketUz.csproj", "{9B461E2A-9FD8-4787-A61E-E983634BEEA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketUzService", "MarketUzService\MarketUzService.csproj", "{243FD1D0-726C-493D-9873-6BB148511D00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketUzServices", "MarketUzService\MarketUzServices.csproj", "{243FD1D0-726C-493D-9873-6BB148511D00}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

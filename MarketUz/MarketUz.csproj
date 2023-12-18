@@ -29,7 +29,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MarketUz.Domain\MarketUz.Domain.csproj" />
     <ProjectReference Include="..\MarketUz.Infrastructure\MarketUz.Infrastructure.csproj" />
-    <ProjectReference Include="..\MarketUzService\MarketUzService.csproj" />
+    <ProjectReference Include="..\MarketUzService\MarketUzServices.csproj" />
   </ItemGroup>
 
 </Project>

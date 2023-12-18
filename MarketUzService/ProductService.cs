@@ -3,6 +3,7 @@ using DiyorMarket.Domain.Interfaces.Services;
 using MarketUz.Domain.DTOs.Product;
 using MarketUz.Domain.Entities;
 using MarketUz.Domain.Exceptions;
+using MarketUz.Domain.Pagination;
 using MarketUz.Infrastructure.Persistence;
 using MarketUz.ResourceParameters;
 using Microsoft.Extensions.Logging;
@@ -22,45 +23,60 @@ namespace MarketUz.Services
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public IEnumerable<ProductDto> GetProducts(ProductResourceParameters productResourceParameters)
+        public PaginatedList<ProductDto> GetProducts(ProductResourceParameters productResourceParameters)
         {
             var query = _context.Products.AsQueryable();
 
-                if (productResourceParameters.CategoryId is not null)
+            if (productResourceParameters.CategoryId is not null)
+            {
+                query = query.Where(x => x.CategoryId == productResourceParameters.CategoryId);
+            }
+
+            if (!string.IsNullOrWhiteSpace(productResourceParameters.SearchString))
+            {
+                query = query.Where(x => x.Name.Contains(productResourceParameters.SearchString)
+                || x.Description.Contains(productResourceParameters.SearchString));
+            }
+
+            if (productResourceParameters.Price is not null)
+            {
+                query = query.Where(x => x.Price == productResourceParameters.Price);
+            }
+
+            if (productResourceParameters.PriceLessThan is not null)
+            {
+                query = query.Where(x => x.Price < productResourceParameters.PriceLessThan);
+            }
+
+            if (productResourceParameters.PriceGreaterThan is not null)
+            {
+                query = query.Where(x => x.Price > productResourceParameters.PriceGreaterThan);
+            }
+
+            if (!string.IsNullOrEmpty(productResourceParameters.OrderBy))
+            {
+                query = productResourceParameters.OrderBy.ToLowerInvariant() switch
                 {
-                    query = query.Where(x => x.CategoryId == productResourceParameters.CategoryId);
-                }
+                    "name" => query.OrderBy(x => x.Name),
+                    "namedesc" => query.OrderByDescending(x => x.Name),
+                    "description" => query.OrderBy(x => x.Description),
+                    "descriptiondesc" => query.OrderByDescending(x => x.Description),
+                    "price" => query.OrderBy(x => x.Price),
+                    "pricedesc" => query.OrderByDescending(x => x.Price),
+                    "expiredate" => query.OrderBy(x => x.ExpireDate),
+                    "expiredatedesc" => query.OrderByDescending(x => x.ExpireDate),
+                    _ => query.OrderBy(x => x.Name),
+                };
+            }
 
-                if (!string.IsNullOrWhiteSpace(productResourceParameters.SearchString))
-                {
-                    query = query.Where(x => x.Name.Contains(productResourceParameters.SearchString)
-                    || x.Description.Contains(productResourceParameters.SearchString));
-                }
+            var products = query.ToPaginatedList(productResourceParameters.PageSize, productResourceParameters.PageNumber);
+            // var products = query.ToList();
+            var productDtos = _mapper.Map<List<ProductDto>>(products);
 
-                if (productResourceParameters.Price is not null)
-                {
-                    query = query.Where(x => x.Price == productResourceParameters.Price);
-                }
+            return new PaginatedList<ProductDto>(productDtos, products.TotalCount, products.CurrentPage, products.PageSize);
 
-                if (productResourceParameters.PriceLessThan is not null)
-                {
-                    query = query.Where(x => x.Price < productResourceParameters.PriceLessThan);
-                }
-
-                if (productResourceParameters.PriceGreaterThan is not null)
-                {
-                    query = query.Where(x => x.Price > productResourceParameters.PriceGreaterThan);
-                }
-
-                var products = query.ToList();
-
-                var productDtos = _mapper.Map<IEnumerable<ProductDto>>(products);
-
-                return productDtos;
-            
-           
         }
-
+    
         public ProductDto? GetProductById(int id)
         {
             var product = _context.Products.FirstOrDefault(x => x.Id == id);

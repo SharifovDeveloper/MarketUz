@@ -1,32 +1,22 @@
 ﻿namespace MarketUz.Domain.Pagination
 {
-    public class PaginationList<T> : List<T>
+    public class PaginatedList<T> : List<T> where T : class
     {
-        public const int MaxPagesSize = 25;
-        public int PageSize
-        {
-            get
-            {
-                return _pageSize;
-            }
-            set
-            {
-                if (value > MaxPagesSize)
-                {
-                    PageSize = MaxPagesSize;
-                }
-                else
-                {
-                    PageSize = value;
-                }
-            }
-        }
-        private int _pageSize = 15;
-        public int TotalCount { get; set; }
-
         public int CurrentPage { get; set; }
-        public int PreviosPage { get; set; }
-        public int NextPage { get; set; }
-        public int TotalPage { get; set; }
+        public int TotalPages { get; set; }
+        public int PageSize { get; set; }
+        public int TotalCount { get; set; }
+        public bool HasPrevious => CurrentPage > 1;
+        public bool HasNext => CurrentPage < TotalPages;
+
+        public PaginatedList(List<T> items, int count, int pageNumber, int pageSize)
+        {
+            TotalCount = count;
+            PageSize = pageSize;
+            CurrentPage = pageNumber;
+            TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+
+            AddRange(items);
+        }
     }
 }
