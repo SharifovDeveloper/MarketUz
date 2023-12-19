@@ -1,12 +1,9 @@
 ﻿using MarketUz.Domain.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace MarketUz.Domain.Pagination
 {
+
     public static class PaginationExtension
     {
         public static async Task<PaginatedList<T>> ToPaginatedListAsync<T>(
@@ -36,4 +33,5 @@ namespace MarketUz.Domain.Pagination
         }
     }
 }
+
 
