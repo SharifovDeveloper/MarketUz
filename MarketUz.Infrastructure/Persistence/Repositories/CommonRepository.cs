@@ -105,6 +105,6 @@ namespace MarketUz.Infrastructure.Persistence.Repositories
             return _context.SaveChanges();
         }
 
-      
+
     }
 }

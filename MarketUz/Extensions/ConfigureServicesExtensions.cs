@@ -1,11 +1,11 @@
 ﻿using DiyorMarket.Domain.Interfaces.Services;
+using DiyorMarket.Services;
 using MarketUz.Domain.Interfaces.Repositories;
 using MarketUz.Infrastructure.Persistence;
 using MarketUz.Infrastructure.Persistence.Repositories;
+using MarketUz.Services;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using MarketUz.Services;
-using DiyorMarket.Services;
 
 namespace MarketUz.Extensions
 {

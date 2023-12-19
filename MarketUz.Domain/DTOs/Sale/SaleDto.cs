@@ -1,11 +1,4 @@
-﻿using AutoMapper.Configuration.Conventions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DiyorMarket.Domain.DTOs.Sale
+﻿namespace DiyorMarket.Domain.DTOs.Sale
 {
     public class SaleDto
     {
@@ -13,5 +6,5 @@ namespace DiyorMarket.Domain.DTOs.Sale
         public DateTime SaleDate { get; set; }
         public int CustomerId { get; set; }
     }
-    
+
 }

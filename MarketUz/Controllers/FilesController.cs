@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 
 namespace DiyorMarket.Api.Controllers
@@ -29,7 +28,7 @@ namespace DiyorMarket.Api.Controllers
                 fileName = "Dars rejasi(C#).pdf";
             }
 
-            if (!System.IO.File.Exists(fileName)) 
+            if (!System.IO.File.Exists(fileName))
             {
                 return NotFound();
             }

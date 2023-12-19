@@ -5,7 +5,6 @@ using MarketUz.Domain.Entities;
 using MarketUz.Domain.Exceptions;
 using MarketUz.Infrastructure.Persistence;
 using Microsoft.Extensions.Logging;
-using Serilog;
 
 namespace MarketUz.Services
 {

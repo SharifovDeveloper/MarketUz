@@ -10,6 +10,6 @@ namespace MarketUz.Infrastructure.Persistence.Repositories
         {
         }
 
-     
+
     }
 }

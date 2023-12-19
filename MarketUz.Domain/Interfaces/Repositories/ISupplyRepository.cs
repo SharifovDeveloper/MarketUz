@@ -4,6 +4,6 @@ namespace MarketUz.Domain.Interfaces.Repositories
 {
     public interface ISupplyRepository : IRepositoryBase<Supply>
     {
-      
+
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MarketUz.Domain.DTOs.SaleItem
+﻿namespace MarketUz.Domain.DTOs.SaleItem
 {
     public class SaleItemDto
     {
@@ -14,5 +8,5 @@ namespace MarketUz.Domain.DTOs.SaleItem
         public int ProductId { get; set; }
         public int SaleId { get; set; }
     }
-    
+
 }

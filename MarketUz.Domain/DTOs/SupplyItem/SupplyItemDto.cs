@@ -1,12 +1,4 @@
-﻿using AutoMapper.Configuration.Conventions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MarketUz.Domain.DTOs.SupplyItem
+﻿namespace MarketUz.Domain.DTOs.SupplyItem
 {
     public class SupplyItemDto
     {
@@ -16,5 +8,5 @@ namespace MarketUz.Domain.DTOs.SupplyItem
         public int ProductId { get; set; }
         public int SupplyId { get; set; }
     }
-   
+
 }

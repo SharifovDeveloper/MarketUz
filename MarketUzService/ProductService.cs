@@ -7,7 +7,6 @@ using MarketUz.Domain.Pagination;
 using MarketUz.Infrastructure.Persistence;
 using MarketUz.ResourceParameters;
 using Microsoft.Extensions.Logging;
-using System.Data.Common;
 namespace MarketUz.Services
 {
     public class ProductService : IProductService
@@ -76,7 +75,7 @@ namespace MarketUz.Services
             return new PaginatedList<ProductDto>(productDtos, products.TotalCount, products.CurrentPage, products.PageSize);
 
         }
-    
+
         public ProductDto? GetProductById(int id)
         {
             var product = _context.Products.FirstOrDefault(x => x.Id == id);

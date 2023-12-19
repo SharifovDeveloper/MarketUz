@@ -6,7 +6,7 @@ namespace MarketUz.Domain.Mappings
 {
     public class CategoryMappings : Profile
     {
-        public CategoryMappings() 
+        public CategoryMappings()
         {
             CreateMap<Category, CategoryDto>();
             CreateMap<CategoryDto, Category>();

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MarketUz.Domain.DTOs.SupplyItem
+﻿namespace MarketUz.Domain.DTOs.SupplyItem
 {
     public record SupplyItemForUpdateDto(
         int Id,
@@ -12,5 +6,5 @@ namespace MarketUz.Domain.DTOs.SupplyItem
         decimal UnitPrice,
         int ProductId,
         int SupplyId);
-   
+
 }
