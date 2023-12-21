@@ -9,6 +9,7 @@ namespace MarketUz.Domain.DTOs.Product
         public string Description { get; set; }
         public decimal Price { get; set; }
         public DateTime ExpireDate { get; set; }
+        public int CategoryId { get; set; }
         public virtual ICollection<SaleItemDto> SaleItems { get; set; }
     }
 
