@@ -43,7 +43,7 @@ namespace DiyorMarketApi.Controllers
         [HttpGet("{id}", Name = "GetProductById")]
         public ActionResult<ProductDto> Get(int id)
         {
-            throw new Exception();
+            
             try
             {
                 var product = _productService.GetProductById(id);
