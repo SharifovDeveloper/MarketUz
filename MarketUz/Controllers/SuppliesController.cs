@@ -17,54 +17,35 @@ namespace DiyorMarket.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<SupplyDto>> Get()
         {
-            try
-            {
-                var supplies = _supplyService.GetSupplies();
+          
+            var supplies = _supplyService.GetSupplies();
 
-                return Ok(supplies);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500,
-                    $"There was error returning supplies. {ex.Message}");
-            }
+            return Ok(supplies);
+          
         }
 
         [HttpGet("{id}", Name = "GetSupplyById")]
         public ActionResult<SupplyDto> Get(int id)
         {
-            try
-            {
-                var supply = _supplyService.GetSupplyById(id);
+           var supply = _supplyService.GetSupplyById(id);
 
-                if (supply is null)
-                {
-                    return NotFound($"Supply with id: {id} does not exist.");
-                }
-
-                return Ok(supply);
-            }
-            catch (Exception ex)
+            if (supply is null)
             {
-                return StatusCode(500,
-                    $"There was error getting supply with id: {id}. {ex.Message}");
+                return NotFound($"Supply with id: {id} does not exist.");
             }
+
+            return Ok(supply);
+           
         }
 
         [HttpPost]
         public ActionResult Post([FromBody] SupplyForCreateDto supply)
         {
-            try
-            {
-                _supplyService.CreateSupply(supply);
 
-                return StatusCode(201);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500,
-                    $"There was an error creating new supply. {ex.Message}");
-            }
+            _supplyService.CreateSupply(supply);
+
+            return StatusCode(201);
+            
         }
 
         [HttpPut("{id}")]
@@ -75,36 +56,21 @@ namespace DiyorMarket.Controllers
                 return BadRequest(
                     $"Route id: {id} does not match with parameter id: {supply.Id}.");
             }
+        
+            _supplyService.UpdateSupply(supply);
 
-            try
-            {
-                _supplyService.UpdateSupply(supply);
-
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-
-                return StatusCode(500,
-                    $"There was an error updating supply with id: {id}. {ex.Message}");
-
-            }
+            return NoContent();
+          
         }
 
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            try
-            {
-                _supplyService.DeleteSupply(id);
+         
+            _supplyService.DeleteSupply(id);
 
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500,
-                    $"There was an error deleting supply with id: {id}. {ex.Message}");
-            }
+            return NoContent();
+           
         }
     }
 }

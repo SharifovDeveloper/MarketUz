@@ -17,54 +17,35 @@ namespace DiyorMarket.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<SupplierDto>> Get()
         {
-            try
-            {
-                var suppliers = _supplierService.GetSuppliers();
+           var suppliers = _supplierService.GetSuppliers();
 
-                return Ok(suppliers);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500,
-                    $"There was error returning suppliers. {ex.Message}");
-            }
+           return Ok(suppliers);
+           
         }
 
         [HttpGet("{id}", Name = "GetSupplierById")]
         public ActionResult<SupplierDto> Get(int id)
         {
-            try
-            {
-                var supplier = _supplierService.GetSupplierById(id);
+          
+            var supplier = _supplierService.GetSupplierById(id);
 
-                if (supplier is null)
-                {
-                    return NotFound($"Supplier with id: {id} does not exist.");
-                }
-
-                return Ok(supplier);
-            }
-            catch (Exception ex)
+            if (supplier is null)
             {
-                return StatusCode(500,
-                    $"There was error getting supplier with id: {id}. {ex.Message}");
+                return NotFound($"Supplier with id: {id} does not exist.");
             }
+
+            return Ok(supplier);
+          
         }
 
         [HttpPost]
         public ActionResult Post([FromBody] SupplierForCreateDto supplier)
         {
-            try
-            {
-                _supplierService.CreateSupplier(supplier);
+            
+            _supplierService.CreateSupplier(supplier);
 
-                return StatusCode(201);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500,
-                    $"There was an error creating new supplier. {ex.Message}");
-            }
+            return StatusCode(201);
+           
         }
 
         [HttpPut("{id}")]
@@ -76,35 +57,20 @@ namespace DiyorMarket.Controllers
                     $"Route id: {id} does not match with parameter id: {supplier.Id}.");
             }
 
-            try
-            {
-                _supplierService.UpdateSupplier(supplier);
+            _supplierService.UpdateSupplier(supplier);
 
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-
-                return StatusCode(500,
-                    $"There was an error updating supplier with id: {id}. {ex.Message}");
-
-            }
+            return NoContent();
+           
         }
 
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            try
-            {
-                _supplierService.DeleteSupplier(id);
+          
+            _supplierService.DeleteSupplier(id);
 
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500,
-                    $"There was an error deleting supplier with id: {id}. {ex.Message}");
-            }
+            return NoContent();
+            
         }
     }
 }

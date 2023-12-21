@@ -17,54 +17,36 @@ namespace DiyorMarket.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<SaleItemDto>> Get()
         {
-            try
-            {
-                var saleItems = _saleItemService.GetSaleItems();
+            
+            var saleItems = _saleItemService.GetSaleItems();
 
-                return Ok(saleItems);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500,
-                    $"There was error returning saleItems. {ex.Message}");
-            }
+            return Ok(saleItems);
+            
         }
 
         [HttpGet("{id}", Name = "GetSaleItemById")]
         public ActionResult<SaleItemDto> Get(int id)
         {
-            try
-            {
-                var saleItem = _saleItemService.GetSaleItemById(id);
+           
+            var saleItem = _saleItemService.GetSaleItemById(id);
 
-                if (saleItem is null)
-                {
-                    return NotFound($"SaleItem with id: {id} does not exist.");
-                }
-
-                return Ok(saleItem);
-            }
-            catch (Exception ex)
+            if (saleItem is null)
             {
-                return StatusCode(500,
-                    $"There was error getting saleItem with id: {id}. {ex.Message}");
+                return NotFound($"SaleItem with id: {id} does not exist.");
             }
+
+            return Ok(saleItem);
+           
         }
 
         [HttpPost]
         public ActionResult Post([FromBody] SaleItemForCreateDto saleItem)
         {
-            try
-            {
-                _saleItemService.CreateSaleItem(saleItem);
+           
+            _saleItemService.CreateSaleItem(saleItem);
 
-                return StatusCode(201);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500,
-                    $"There was an error creating new saleItem. {ex.Message}");
-            }
+            return StatusCode(201);
+
         }
 
         [HttpPut("{id}")]
@@ -75,36 +57,21 @@ namespace DiyorMarket.Controllers
                 return BadRequest(
                     $"Route id: {id} does not match with parameter id: {saleItem.Id}.");
             }
+         
+            _saleItemService.UpdateSaleItem(saleItem);
 
-            try
-            {
-                _saleItemService.UpdateSaleItem(saleItem);
-
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-
-                return StatusCode(500,
-                    $"There was an error updating saleItem with id: {id}. {ex.Message}");
-
-            }
+            return NoContent();
+          
         }
 
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            try
-            {
+          
                 _saleItemService.DeleteSaleItem(id);
 
                 return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500,
-                    $"There was an error deleting saleItem with id: {id}. {ex.Message}");
-            }
+            
         }
     }
 }
