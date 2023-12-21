@@ -18,54 +18,37 @@ namespace DiyorMarket.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<CustomerDto>> Get()
         {
-            try
-            {
-                var customers = _customerService.GetCustomers();
+             
+            var customers = _customerService.GetCustomers();
 
-                return Ok(customers);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500,
-                    $"There was error returning customers. {ex.Message}");
-            }
+            return Ok(customers);
+            
+          
         }
 
         [HttpGet("{id}", Name = "GetCustomerById")]
         public ActionResult<CustomerDto> Get(int id)
         {
-            try
-            {
-                var customer = _customerService.GetCustomerById(id);
+           
+            var customer = _customerService.GetCustomerById(id);
 
-                if (customer is null)
-                {
-                    return NotFound($"Customer with id: {id} does not exist.");
-                }
-
-                return Ok(customer);
-            }
-            catch (Exception ex)
+            if (customer is null)
             {
-                return StatusCode(500,
-                    $"There was error getting customer with id: {id}. {ex.Message}");
+                return NotFound($"Customer with id: {id} does not exist.");
             }
+
+            return Ok(customer);
+            
         }
 
         [HttpPost]
         public ActionResult Post([FromBody] CustomerForCreateDto customer)
         {
-            try
-            {
-                _customerService.CreateCustomer(customer);
+          
+            _customerService.CreateCustomer(customer);
 
-                return StatusCode(201);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500,
-                    $"There was an error creating new customer. {ex.Message}");
-            }
+            return StatusCode(201);
+           
         }
 
         [HttpPut("{id}")]
@@ -77,35 +60,20 @@ namespace DiyorMarket.Controllers
                     $"Route id: {id} does not match with parameter id: {customer.Id}.");
             }
 
-            try
-            {
-                _customerService.UpdateCustomer(customer);
+            _customerService.UpdateCustomer(customer);
 
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-
-                return StatusCode(500,
-                    $"There was an error updating customer with id: {id}. {ex.Message}");
-
-            }
+             return NoContent();
+            
         }
 
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            try
-            {
-                _customerService.DeleteCustomer(id);
+          
+            _customerService.DeleteCustomer(id);
 
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500,
-                    $"There was an error deleting customer with id: {id}. {ex.Message}");
-            }
+            return NoContent();
+           
         }
     }
 }

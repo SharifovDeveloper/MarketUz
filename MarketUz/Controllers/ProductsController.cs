@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using DiyorMarket.Domain.Interfaces.Services;
+﻿using DiyorMarket.Domain.Interfaces.Services;
 using MarketUz.Domain.DTOs.Product;
 using MarketUz.ResourceParameters;
 using Microsoft.AspNetCore.Mvc;
@@ -13,12 +12,11 @@ namespace DiyorMarketApi.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
-        private readonly IMapper _mapper;
 
-        public ProductsController(IProductService productService, IMapper mapper)
+        public ProductsController(IProductService productService)
         {
             _productService = productService;
-            _mapper = mapper;
+
         }
 
         // GET: api/<ProductsController>
@@ -26,57 +24,32 @@ namespace DiyorMarketApi.Controllers
         public ActionResult<IEnumerable<ProductDto>> GetProductsAsync(
             [FromQuery] ProductResourceParameters productResourceParameters)
         {
-            try
-            {
-                var products = _productService.GetProducts(productResourceParameters);
+            var products = _productService.GetProducts(productResourceParameters);
 
-                return Ok(products);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500,
-                    $"There was error returning products. {ex.Message}");
-            }
+            return Ok(products);
         }
 
         // GET api/<ProductsController>/5
         [HttpGet("{id}", Name = "GetProductById")]
         public ActionResult<ProductDto> Get(int id)
         {
-            
-            try
-            {
-                var product = _productService.GetProductById(id);
+            var product = _productService.GetProductById(id);
 
-                if (product is null)
-                {
-                    return NotFound($"Product with id: {id} does not exist.");
-                }
-
-                return Ok(product);
-            }
-            catch (Exception ex)
+            if (product is null)
             {
-                return StatusCode(500,
-                    $"There was error getting product with id: {id}. {ex.Message}");
+                return NotFound($"Product with id: {id} does not exist.");
             }
+
+            return Ok(product);
         }
 
         // POST api/<ProductsController>
         [HttpPost]
         public ActionResult Post([FromBody] ProductForCreateDto product)
         {
-            try
-            {
-                _productService.CreateProduct(product);
+            _productService.CreateProduct(product);
 
-                return StatusCode(201);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500,
-                    $"There was an error creating new product. {ex.Message}");
-            }
+            return StatusCode(201);
         }
 
         // PUT api/<ProductsController>/5
@@ -89,19 +62,10 @@ namespace DiyorMarketApi.Controllers
                     $"Route id: {id} does not match with parameter id: {product.Id}.");
             }
 
-            try
-            {
-                _productService.UpdateProduct(product);
+            _productService.UpdateProduct(product);
 
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
+            return NoContent();
 
-                return StatusCode(500,
-                    $"There was an error updating product with id: {id}. {ex.Message}");
-
-            }
         }
 
 
