@@ -3,6 +3,8 @@ using DiyorMarket.Domain.Interfaces.Services;
 using MarketUz.Domain.DTOs.Category;
 using MarketUz.Domain.Entities;
 using MarketUz.Domain.Exceptions;
+using MarketUz.Domain.Pagination;
+using MarketUz.Domain.ResourceParameters;
 using MarketUz.Infrastructure.Persistence;
 using Microsoft.Extensions.Logging;
 
@@ -23,13 +25,30 @@ namespace MarketUz.Services
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public IEnumerable<CategoryDto> GetCategories()
+        public PaginatedList<CategoryDto> GetCategories(CategoryResourceParameters categoryResourceParameters)
         {
-            var categories = _context.Categories.ToList();
+            var query = _context.Categories.AsQueryable();
+            if (!string.IsNullOrWhiteSpace(categoryResourceParameters.SearchString))
+            {
+                query = query.Where(x => x.Name.Contains(categoryResourceParameters.SearchString));
+            }
 
-            var categoryDtos = _mapper.Map<IEnumerable<CategoryDto>>(categories);
+            if (!string.IsNullOrEmpty(categoryResourceParameters.OrderBy))
+            {
+                query = categoryResourceParameters.OrderBy.ToLowerInvariant() switch
+                {
+                    "name" => query.OrderBy(x => x.Name),
+                    "namedesc" => query.OrderByDescending(x => x.Name),
+                    _ => throw new NotImplementedException()
+                };
 
-            return categoryDtos;
+            }
+            var categories = query.ToPaginatedList(categoryResourceParameters.PageSize, categoryResourceParameters.PageNumber);
+
+            var categoryDtos = _mapper.Map<List<CategoryDto>>(categories);
+
+            return new PaginatedList<CategoryDto>(categoryDtos, categories.TotalCount, categories.CurrentPage, categories.PageSize);
+
         }
 
         public CategoryDto? GetCategoryById(int id)

@@ -1,6 +1,7 @@
 ﻿using DiyorMarket.Domain.Interfaces.Services;
 using MarketUz.Domain.DTOs.Category;
 using MarketUz.Domain.DTOs.Product;
+using MarketUz.Domain.ResourceParameters;
 using MarketUz.ResourceParameters;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,9 +21,9 @@ namespace DiyorMarketApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<CategoryDto>> Get()
+        public ActionResult<IEnumerable<CategoryDto>> Get([FromQuery] CategoryResourceParameters categoryResourceParameters)
         {
-            var categories = _categoryService.GetCategories();
+            var categories = _categoryService.GetCategories(categoryResourceParameters);
 
             return Ok(categories);
         }
