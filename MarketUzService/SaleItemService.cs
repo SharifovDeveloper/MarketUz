@@ -5,7 +5,6 @@ using MarketUz.Domain.Entities;
 using MarketUz.Domain.Exceptions;
 using MarketUz.Infrastructure.Persistence;
 using Microsoft.Extensions.Logging;
-using System.Data.Common;
 
 namespace DiyorMarket.Services
 {
@@ -49,81 +48,37 @@ namespace DiyorMarket.Services
 
         public SaleItemDto CreateSaleItem(SaleItemForCreateDto saleItemToCreate)
         {
-            try
-            {
-                var saleItemEntity = _mapper.Map<SaleItem>(saleItemToCreate);
 
-                _context.SaleItems.Add(saleItemEntity);
-                _context.SaveChanges();
+            var saleItemEntity = _mapper.Map<SaleItem>(saleItemToCreate);
 
-                var saleItemDto = _mapper.Map<SaleItemDto>(saleItemEntity);
+            _context.SaleItems.Add(saleItemEntity);
+            _context.SaveChanges();
 
-                return saleItemDto;
-            }
-            catch (AutoMapperMappingException ex)
-            {
-                _logger.LogError($"There was an error mapping between SaleItem and SaleItemDto", ex.Message);
-                throw;
-            }
-            catch (DbException ex)
-            {
-                _logger.LogError("Database error occured while creating new saleItem.", ex.Message);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Something went wrong while creating new saleItem.", ex.Message);
-                throw;
-            }
+            var saleItemDto = _mapper.Map<SaleItemDto>(saleItemEntity);
+
+            return saleItemDto;
+
         }
 
         public void UpdateSaleItem(SaleItemForUpdateDto saleItemToUpdate)
         {
-            try
-            {
-                var saleItemEntity = _mapper.Map<SaleItem>(saleItemToUpdate);
 
-                _context.SaleItems.Update(saleItemEntity);
-                _context.SaveChanges();
-            }
-            catch (AutoMapperMappingException ex)
-            {
-                _logger.LogError($"There was an error mapping between SaleItem and SaleItemDto", ex.Message);
-                throw;
-            }
-            catch (DbException ex)
-            {
-                _logger.LogError("Database error occured while updating saleItem.", ex.Message);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Something went wrong while updating saleItem.", ex.Message);
-                throw;
-            }
+            var saleItemEntity = _mapper.Map<SaleItem>(saleItemToUpdate);
+
+            _context.SaleItems.Update(saleItemEntity);
+            _context.SaveChanges();
+
         }
 
         public void DeleteSaleItem(int id)
         {
-            try
+
+            var saleItem = _context.SaleItems.FirstOrDefault(x => x.Id == id);
+            if (saleItem is not null)
             {
-                var saleItem = _context.SaleItems.FirstOrDefault(x => x.Id == id);
-                if (saleItem is not null)
-                {
-                    _context.SaleItems.Remove(saleItem);
-                }
-                _context.SaveChanges();
+                _context.SaleItems.Remove(saleItem);
             }
-            catch (DbException ex)
-            {
-                _logger.LogError($"Database error occured while deleting saleItem with id: {id}.", ex.Message);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Something went wrong while deleting saleItem with id: {id}.", ex.Message);
-                throw;
-            }
+
         }
 
 
