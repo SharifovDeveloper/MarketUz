@@ -4,5 +4,4 @@
       int Id,
       string Name,
       int CategoryId);
-
 }

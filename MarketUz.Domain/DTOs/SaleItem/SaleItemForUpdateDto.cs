@@ -6,6 +6,4 @@
          decimal UnitPrice,
          int ProductId,
          int SaleId);
-
-
 }

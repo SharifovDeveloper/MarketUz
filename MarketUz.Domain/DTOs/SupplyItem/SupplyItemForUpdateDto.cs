@@ -6,5 +6,4 @@
         decimal UnitPrice,
         int ProductId,
         int SupplyId);
-
 }

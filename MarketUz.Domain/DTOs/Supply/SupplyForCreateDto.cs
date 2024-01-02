@@ -3,5 +3,4 @@
     public record SupplyForCreateDto(
         DateTime SupplyDate,
         int SupplierId);
-
 }

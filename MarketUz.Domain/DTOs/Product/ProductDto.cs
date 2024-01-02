@@ -12,5 +12,4 @@ namespace MarketUz.Domain.DTOs.Product
         public int CategoryId { get; set; }
         public virtual ICollection<SaleItemDto> SaleItems { get; set; }
     }
-
 }

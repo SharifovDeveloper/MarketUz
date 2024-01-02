@@ -4,5 +4,4 @@
          string Name,
          decimal Price,
          int CategoryId);
-
 }

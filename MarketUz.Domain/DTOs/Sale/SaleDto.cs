@@ -6,5 +6,4 @@
         public DateTime SaleDate { get; set; }
         public int CustomerId { get; set; }
     }
-
 }

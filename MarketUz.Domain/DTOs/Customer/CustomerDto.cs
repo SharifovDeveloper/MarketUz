@@ -9,6 +9,4 @@ namespace MarketUz.Domain.DTOs.Customer
         public string Phone { get; set; }
         public virtual ICollection<SaleDto> Sales { get; set; }
     }
-
-
 }

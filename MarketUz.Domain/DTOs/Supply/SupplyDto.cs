@@ -9,5 +9,4 @@ namespace MarketUz.Domain.DTOs.Supply
         public int SupplierId { get; set; }
         public virtual ICollection<SupplyItemDto> SupplItems { get; set; }
     }
-
 }

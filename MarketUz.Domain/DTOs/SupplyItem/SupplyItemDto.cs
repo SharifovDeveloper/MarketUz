@@ -8,5 +8,4 @@
         public int ProductId { get; set; }
         public int SupplyId { get; set; }
     }
-
 }

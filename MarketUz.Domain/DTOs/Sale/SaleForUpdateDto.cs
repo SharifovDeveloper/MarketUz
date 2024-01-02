@@ -4,6 +4,4 @@
         int Id,
         DateTime saleDate,
         int CustomerId);
-
-
 }

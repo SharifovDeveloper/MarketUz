@@ -3,5 +3,4 @@
     public record SaleForCreateDto(
         DateTime saleDate,
         int CustomerId);
-
 }
