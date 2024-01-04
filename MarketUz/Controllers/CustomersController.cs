@@ -17,13 +17,10 @@ namespace DiyorMarket.Controllers
 
         [HttpGet]
         public ActionResult<IEnumerable<CustomerDto>> Get()
-        {
-             
+        {      
             var customers = _customerService.GetCustomers();
 
             return Ok(customers);
-            
-          
         }
 
         [HttpGet("{id}", Name = "GetCustomerById")]
