@@ -73,7 +73,6 @@ namespace MarketUz.Services
             var productDtos = _mapper.Map<List<ProductDto>>(products);
 
             return new PaginatedList<ProductDto>(productDtos, products.TotalCount, products.CurrentPage, products.PageSize);
-
         }
 
         public ProductDto? GetProductById(int id)
@@ -86,12 +85,10 @@ namespace MarketUz.Services
             var productDto = _mapper.Map<ProductDto>(product);
 
             return productDto;
-
         }
 
         public ProductDto CreateProduct(ProductForCreateDto productToCreate)
         {
-
             var productEntity = _mapper.Map<Product>(productToCreate);
 
             _context.Products.Add(productEntity);
@@ -100,17 +97,14 @@ namespace MarketUz.Services
             var productDto = _mapper.Map<ProductDto>(productEntity);
 
             return productDto;
-
         }
 
         public void UpdateProduct(ProductForUpdateDto productToUpdate)
         {
-
             var productEntity = _mapper.Map<Product>(productToUpdate);
 
             _context.Products.Update(productEntity);
             _context.SaveChanges();
-
         }
 
         public void DeleteProduct(int id)
@@ -121,7 +115,6 @@ namespace MarketUz.Services
                 _context.Products.Remove(product);
             }
             _context.SaveChanges();
-
         }
     }
 }
