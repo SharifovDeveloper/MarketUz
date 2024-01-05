@@ -23,18 +23,15 @@ namespace DiyorMarket.Services
 
         public IEnumerable<SaleItemDto> GetSaleItems()
         {
-
             var saleItems = _context.SaleItems.ToList();
 
             var saleItemDtos = _mapper.Map<IEnumerable<SaleItemDto>>(saleItems);
 
             return saleItemDtos;
-
         }
 
         public SaleItemDto? GetSaleItemById(int id)
         {
-
             var saleItem = _context.SaleItems.FirstOrDefault(x => x.Id == id);
             if (saleItem is null)
             {
@@ -43,12 +40,10 @@ namespace DiyorMarket.Services
             var saleItemDto = _mapper.Map<SaleItemDto>(saleItem);
 
             return saleItemDto;
-
         }
 
         public SaleItemDto CreateSaleItem(SaleItemForCreateDto saleItemToCreate)
         {
-
             var saleItemEntity = _mapper.Map<SaleItem>(saleItemToCreate);
 
             _context.SaleItems.Add(saleItemEntity);
@@ -57,22 +52,18 @@ namespace DiyorMarket.Services
             var saleItemDto = _mapper.Map<SaleItemDto>(saleItemEntity);
 
             return saleItemDto;
-
         }
 
         public void UpdateSaleItem(SaleItemForUpdateDto saleItemToUpdate)
         {
-
             var saleItemEntity = _mapper.Map<SaleItem>(saleItemToUpdate);
 
             _context.SaleItems.Update(saleItemEntity);
             _context.SaveChanges();
-
         }
 
         public void DeleteSaleItem(int id)
         {
-
             var saleItem = _context.SaleItems.FirstOrDefault(x => x.Id == id);
             if (saleItem is not null)
             {
@@ -80,7 +71,5 @@ namespace DiyorMarket.Services
             }
 
         }
-
-
     }
 }
