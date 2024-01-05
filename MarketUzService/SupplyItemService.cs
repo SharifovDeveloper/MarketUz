@@ -23,7 +23,6 @@ namespace DiyorMarket.Services
 
         public IEnumerable<SupplyItemDto> GetSupplyItems()
         {
-
             var supplyItems = _context.SupplyItems.ToList();
 
             var supplyItemDtos = _mapper.Map<IEnumerable<SupplyItemDto>>(supplyItems);
@@ -33,7 +32,6 @@ namespace DiyorMarket.Services
 
         public SupplyItemDto? GetSupplyItemById(int id)
         {
-
             var supplyItem = _context.SupplyItems.FirstOrDefault(x => x.Id == id);
             if (supplyItem is null)
             {
@@ -42,12 +40,10 @@ namespace DiyorMarket.Services
             var supplyItemDto = _mapper.Map<SupplyItemDto>(supplyItem);
 
             return supplyItemDto;
-
         }
 
         public SupplyItemDto CreateSupplyItem(SupplyItemForCreateDto supplyItemToCreate)
         {
-
             var supplyItemEntity = _mapper.Map<SupplyItem>(supplyItemToCreate);
 
             _context.SupplyItems.Add(supplyItemEntity);
@@ -62,12 +58,10 @@ namespace DiyorMarket.Services
 
         public void UpdateSupplyItem(SupplyItemForUpdateDto supplyItemToUpdate)
         {
-
             var supplyItemEntity = _mapper.Map<SupplyItem>(supplyItemToUpdate);
 
             _context.SupplyItems.Update(supplyItemEntity);
             _context.SaveChanges();
-
         }
 
         public void DeleteSupplyItem(int id)
@@ -78,7 +72,6 @@ namespace DiyorMarket.Services
                 _context.SupplyItems.Remove(supplyItem);
             }
             _context.SaveChanges();
-
         }
     }
 }
