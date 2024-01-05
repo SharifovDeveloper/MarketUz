@@ -48,7 +48,6 @@ namespace MarketUz.Services
             var categoryDtos = _mapper.Map<List<CategoryDto>>(categories);
 
             return new PaginatedList<CategoryDto>(categoryDtos, categories.TotalCount, categories.CurrentPage, categories.PageSize);
-
         }
 
         public CategoryDto? GetCategoryById(int id)
