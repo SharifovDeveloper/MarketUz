@@ -23,7 +23,6 @@ namespace MarketUz.Services
 
         public IEnumerable<CustomerDto> GetCustomers()
         {
-
             var customers = _context.Customers.ToList();
 
             var customerDtos = _mapper.Map<IEnumerable<CustomerDto>>(customers);
@@ -33,7 +32,6 @@ namespace MarketUz.Services
 
         public CustomerDto? GetCustomerById(int id)
         {
-
             var customer = _context.Customers.FirstOrDefault(x => x.Id == id);
             if (customer is null)
             {
@@ -43,12 +41,10 @@ namespace MarketUz.Services
             var customerDto = _mapper.Map<CustomerDto>(customer);
 
             return customerDto;
-
         }
 
         public CustomerDto CreateCustomer(CustomerForCreateDto customerToCreate)
         {
-
             var customerEntity = _mapper.Map<Customer>(customerToCreate);
 
             _context.Customers.Add(customerEntity);
@@ -57,22 +53,18 @@ namespace MarketUz.Services
             var customerDto = _mapper.Map<CustomerDto>(customerEntity);
 
             return customerDto;
-
         }
 
         public void UpdateCustomer(CustomerForUpdateDto customerToUpdate)
         {
-
             var customerEntity = _mapper.Map<Customer>(customerToUpdate);
 
             _context.Customers.Update(customerEntity);
             _context.SaveChanges();
-
         }
 
         public void DeleteCustomer(int id)
         {
-
             var customer = _context.Customers.FirstOrDefault(x => x.Id == id);
             if (customer is not null)
             {
@@ -80,6 +72,5 @@ namespace MarketUz.Services
             }
             _context.SaveChanges();
         }
-
     }
 }
