@@ -29,12 +29,10 @@ namespace DiyorMarket.Services
             var saleDtos = _mapper.Map<IEnumerable<SaleDto>>(sales);
 
             return saleDtos;
-
         }
 
         public SaleDto? GetSaleById(int id)
         {
-
             var sale = _context.Sales.FirstOrDefault(x => x.Id == id);
             if (sale is null)
             {
@@ -43,12 +41,10 @@ namespace DiyorMarket.Services
             var saleDto = _mapper.Map<SaleDto>(sale);
 
             return saleDto;
-
         }
 
         public SaleDto CreateSale(SaleForCreateDto saleToCreate)
         {
-
             var saleEntity = _mapper.Map<Sale>(saleToCreate);
 
             _context.Sales.Add(saleEntity);
@@ -57,17 +53,14 @@ namespace DiyorMarket.Services
             var saleDto = _mapper.Map<SaleDto>(saleEntity);
 
             return saleDto;
-
         }
 
         public void UpdateSale(SaleForUpdateDto saleToUpdate)
         {
-
             var saleEntity = _mapper.Map<Sale>(saleToUpdate);
 
             _context.Sales.Update(saleEntity);
             _context.SaveChanges();
-
         }
 
         public void DeleteSale(int id)
