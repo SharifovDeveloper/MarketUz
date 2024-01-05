@@ -28,7 +28,6 @@ namespace DiyorMarket.Services
             var supplierDtos = _mapper.Map<IEnumerable<SupplierDto>>(suppliers);
 
             return supplierDtos;
-
         }
 
         public SupplierDto? GetSupplierById(int id)
@@ -41,12 +40,10 @@ namespace DiyorMarket.Services
             var supplierDto = _mapper.Map<SupplierDto>(supplier);
 
             return supplierDto;
-
         }
 
         public SupplierDto CreateSupplier(SupplierForCreateDto supplierToCreate)
         {
-
             var supplierEntity = _mapper.Map<Supplier>(supplierToCreate);
 
             _context.Suppliers.Add(supplierEntity);
@@ -55,28 +52,23 @@ namespace DiyorMarket.Services
             var supplierDto = _mapper.Map<SupplierDto>(supplierEntity);
 
             return supplierDto;
-
         }
 
         public void UpdateSupplier(SupplierForUpdateDto supplierToUpdate)
         {
-
             var supplierEntity = _mapper.Map<Supplier>(supplierToUpdate);
 
             _context.Suppliers.Update(supplierEntity);
             _context.SaveChanges();
-
         }
 
         public void DeleteSupplier(int id)
         {
-
             var supplier = _context.Suppliers.FirstOrDefault(x => x.Id == id);
             if (supplier is not null)
             {
                 _context.Suppliers.Remove(supplier);
             }
-
         }
     }
 }
