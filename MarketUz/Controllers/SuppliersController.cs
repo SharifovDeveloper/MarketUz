@@ -17,16 +17,14 @@ namespace DiyorMarket.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<SupplierDto>> Get()
         {
-           var suppliers = _supplierService.GetSuppliers();
+            var suppliers = _supplierService.GetSuppliers();
 
-           return Ok(suppliers);
-           
+            return Ok(suppliers);
         }
 
         [HttpGet("{id}", Name = "GetSupplierById")]
         public ActionResult<SupplierDto> Get(int id)
         {
-          
             var supplier = _supplierService.GetSupplierById(id);
 
             if (supplier is null)
@@ -35,17 +33,14 @@ namespace DiyorMarket.Controllers
             }
 
             return Ok(supplier);
-          
         }
 
         [HttpPost]
         public ActionResult Post([FromBody] SupplierForCreateDto supplier)
         {
-            
             _supplierService.CreateSupplier(supplier);
 
             return StatusCode(201);
-           
         }
 
         [HttpPut("{id}")]
@@ -60,17 +55,14 @@ namespace DiyorMarket.Controllers
             _supplierService.UpdateSupplier(supplier);
 
             return NoContent();
-           
         }
 
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-          
             _supplierService.DeleteSupplier(id);
 
             return NoContent();
-            
         }
     }
 }
