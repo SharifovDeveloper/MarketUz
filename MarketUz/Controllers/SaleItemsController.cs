@@ -17,17 +17,15 @@ namespace DiyorMarket.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<SaleItemDto>> Get()
         {
-            
+
             var saleItems = _saleItemService.GetSaleItems();
 
             return Ok(saleItems);
-            
         }
 
         [HttpGet("{id}", Name = "GetSaleItemById")]
         public ActionResult<SaleItemDto> Get(int id)
         {
-           
             var saleItem = _saleItemService.GetSaleItemById(id);
 
             if (saleItem is null)
@@ -36,17 +34,14 @@ namespace DiyorMarket.Controllers
             }
 
             return Ok(saleItem);
-           
         }
 
         [HttpPost]
         public ActionResult Post([FromBody] SaleItemForCreateDto saleItem)
         {
-           
             _saleItemService.CreateSaleItem(saleItem);
 
             return StatusCode(201);
-
         }
 
         [HttpPut("{id}")]
@@ -57,21 +52,18 @@ namespace DiyorMarket.Controllers
                 return BadRequest(
                     $"Route id: {id} does not match with parameter id: {saleItem.Id}.");
             }
-         
+
             _saleItemService.UpdateSaleItem(saleItem);
 
             return NoContent();
-          
         }
 
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-          
-                _saleItemService.DeleteSaleItem(id);
+            _saleItemService.DeleteSaleItem(id);
 
-                return NoContent();
-            
+            return NoContent();
         }
     }
 }
