@@ -8,7 +8,6 @@ namespace MarketUz.Extensions
     public static class DatabaseSeeder
     {
         private static Faker _faker = new Faker();
-
         public static void SeedDatabase(this IServiceCollection _, IServiceProvider serviceProvider)
         {
             var options = serviceProvider.GetRequiredService<DbContextOptions<MarketUzDbContext>>();
