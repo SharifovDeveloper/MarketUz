@@ -14,7 +14,7 @@ namespace MarketUz.Infrastructure.Persistence.Repositories
             _context = context;
         }
 
-        public  T Create(T entity)
+        public T Create(T entity)
         {
             var createdEntity = _context.Set<T>().Add(entity);
 
@@ -23,14 +23,14 @@ namespace MarketUz.Infrastructure.Persistence.Repositories
 
         public void Delete(int id)
         {
-            var entity =  FindById(id);
+            var entity = FindById(id);
 
             _context.Set<T>().Remove(entity);
         }
 
         public IEnumerable<T> FindAll()
         {
-            var entities =  _context.Set<T>()
+            var entities = _context.Set<T>()
                 .AsNoTracking()
                 .ToList();
 
