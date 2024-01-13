@@ -54,8 +54,6 @@ namespace DiyorMarket.Services
             return supplyItemDto;
         }
 
-
-
         public void UpdateSupplyItem(SupplyItemForUpdateDto supplyItemToUpdate)
         {
             var supplyItemEntity = _mapper.Map<SupplyItem>(supplyItemToUpdate);
