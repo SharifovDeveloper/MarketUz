@@ -51,7 +51,7 @@ namespace DiyorMarketApi.Controllers
         {
             var createdCategory = _categoryService.CreateCategory(category);
 
-            return Created(GetCategoryById, );
+            return StatusCode(201);
         }
 
         [HttpPut("{id}")]
