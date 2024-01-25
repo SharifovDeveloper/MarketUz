@@ -63,7 +63,6 @@ namespace DiyorMarket.Controllers
                 return BadRequest(
                     $"Route id: {id} does not match with parameter id: {sale.Id}.");
             }
-
             _saleService.UpdateSale(sale);
 
             return NoContent();
