@@ -13,7 +13,6 @@ namespace DiyorMarketApi.Controllers
     {
         private readonly ICategoryService _categoryService;
         private readonly IProductService _productService;
-
         public CategoriesController(ICategoryService categoryService, IProductService productService)
         {
             _categoryService = categoryService;
