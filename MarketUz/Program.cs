@@ -28,7 +28,6 @@ using (var scope = app.Services.CreateScope())
     builder.Services.SeedDatabase(services);
 }
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
