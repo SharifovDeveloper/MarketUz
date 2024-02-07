@@ -7,6 +7,6 @@ namespace MarketUz.Domain.DTOs.Supply
         public int Id { get; set; }
         public DateTime SupplyDate { get; set; }
         public int SupplierId { get; set; }
-        public virtual ICollection<SupplyItemDto> SupplItems { get; set; }
+        public virtual ICollection<SupplyItemDto>? SupplItems { get; set; }
     }
 }
