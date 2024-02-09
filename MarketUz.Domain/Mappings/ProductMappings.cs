@@ -12,9 +12,6 @@ namespace MarketUz.Domain.Mappings
             CreateMap<ProductDto, Product>();
             CreateMap<ProductForCreateDto, Product>();
             CreateMap<ProductForUpdateDto, Product>();
-
-
-
         }
     }
 }
