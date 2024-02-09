@@ -6,8 +6,6 @@ namespace MarketUz.Infrastructure.Persistence.Repositories
     public class SupplyItemRepository : RepositoryBase<SupplyItem>, ISupplyItemRepository
     {
         public SupplyItemRepository(MarketUzDbContext context)
-            : base(context) { }
-
-  
+            : base(context) { } 
     }
 }
