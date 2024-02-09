@@ -8,7 +8,5 @@ namespace MarketUz.Infrastructure.Persistence.Repositories
         public SaleItemRepository(MarketUzDbContext context) 
             : base(context)
         { }
-
-    
     }
 }
