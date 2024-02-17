@@ -11,7 +11,6 @@ namespace MarketUz.Domain.Mappings
 
             CreateMap<Customer, CustomerDto>()
                 .ForMember(x => x.FullName, r => r.MapFrom(x => x.FirstName + "" + x.LastName));
-
             CreateMap<CustomerDto, Customer>();
             CreateMap<CustomerForCreateDto, Customer>();
             CreateMap<CustomerForUpdateDto, Customer>();
