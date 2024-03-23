@@ -1,6 +1,6 @@
 ﻿namespace MarketUz.Domain.Pagination
 {
-    public class  PaginatedList<T> : List<T> where T : class
+    public class PaginatedList<T> : List<T> where T : class
     {
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
