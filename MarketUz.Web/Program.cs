@@ -1,6 +1,4 @@
 using MarketUz.Web.Data;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 
 namespace MarketUz.Web
 {
