@@ -22,12 +22,15 @@ namespace MarketUz.Extensions
             services.AddScoped<ISupplierRepository, SupplierRepository>();
             services.AddScoped<ISupplyRepository, SupplyRepository>();
             services.AddScoped<ISupplyItemRepository, SupplyItemRepository>();
+
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<ISaleService, SaleService>();
             services.AddScoped<ISaleItemService, SaleItemService>();
             services.AddScoped<ISupplierService, SupplierService>();
+            services.AddScoped<ISupplyService, SupplyService>();
+            services.AddScoped<ISupplyItemService, SupplyItemService>();
 
             return services;
         }
