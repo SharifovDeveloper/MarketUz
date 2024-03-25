@@ -5,7 +5,7 @@ using MarketUz.Domain.ResourceParameters;
 using MarketUz.ResourceParameters;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DiyorMarketApi.Controllers
+namespace MarketUz.Controllers
 {
     [Route("api/categories")]
     [ApiController]

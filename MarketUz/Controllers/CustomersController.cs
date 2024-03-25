@@ -2,7 +2,7 @@
 using MarketUz.Domain.DTOs.Customer;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DiyorMarket.Controllers
+namespace MarketUz.Controllers
 {
     [Route("api/customers")]
     [ApiController]

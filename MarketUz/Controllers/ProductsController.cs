@@ -3,7 +3,7 @@ using MarketUz.Domain.DTOs.Product;
 using MarketUz.ResourceParameters;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DiyorMarketApi.Controllers
+namespace MarketUz.Controllers
 {
     [Route("api/products")]
     [ApiController]
