@@ -2,7 +2,7 @@
 using MarketUz.Domain.Pagination;
 using MarketUz.Domain.ResourceParameters;
 
-namespace DiyorMarket.Domain.Interfaces.Services
+namespace MarketUz.Domain.Interfaces.Services
 {
     public interface ICategoryService
     {

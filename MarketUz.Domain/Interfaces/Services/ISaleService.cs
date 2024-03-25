@@ -1,9 +1,8 @@
 ﻿
-
 using DiyorMarket.Domain.DTOs.Sale;
 using MarketUz.Domain.DTOs.Sale;
 
-namespace DiyorMarket.Domain.Interfaces.Services
+namespace MarketUz.Domain.Interfaces.Services
 {
     public interface ISaleService
     {
