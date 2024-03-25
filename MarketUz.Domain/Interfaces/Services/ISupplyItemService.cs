@@ -1,6 +1,6 @@
 ﻿using MarketUz.Domain.DTOs.SupplyItem;
 
-namespace DiyorMarket.Domain.Interfaces.Services
+namespace MarketUz.Domain.Interfaces.Services
 {
     public interface ISupplyItemService
     {

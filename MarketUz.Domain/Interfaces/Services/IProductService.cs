@@ -3,7 +3,7 @@ using MarketUz.Domain.DTOs.Product;
 using MarketUz.Domain.Pagination;
 using MarketUz.ResourceParameters;
 
-namespace DiyorMarket.Domain.Interfaces.Services;
+namespace MarketUz.Domain.Interfaces.Services;
 
 public interface IProductService
 {
