@@ -1,4 +1,4 @@
-﻿using DiyorMarket.Domain.Interfaces.Services;
+﻿using MarketUz.Domain.Interfaces.Services;
 using MarketUz.Domain.DTOs.Supplier;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,5 +1,5 @@
 ﻿using DiyorMarket.Domain.DTOs.Sale;
-using DiyorMarket.Domain.Interfaces.Services;
+using MarketUz.Domain.Interfaces.Services;
 using MarketUz.Domain.DTOs.Sale;
 using MarketUz.Domain.DTOs.SaleItem;
 using Microsoft.AspNetCore.Mvc;

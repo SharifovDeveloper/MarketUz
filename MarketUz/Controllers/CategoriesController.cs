@@ -1,4 +1,4 @@
-﻿using DiyorMarket.Domain.Interfaces.Services;
+﻿using MarketUz.Domain.Interfaces.Services;
 using MarketUz.Domain.DTOs.Category;
 using MarketUz.Domain.DTOs.Product;
 using MarketUz.Domain.ResourceParameters;
