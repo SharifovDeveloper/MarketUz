@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using DiyorMarket.Domain.DTOs.Sale;
 using MarketUz.Domain.DTOs.Sale;
 using MarketUz.Domain.Entities;
 

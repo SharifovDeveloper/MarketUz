@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using DiyorMarket.Domain.Interfaces.Services;
 using MarketUz.Domain.DTOs.Category;
 using MarketUz.Domain.Entities;
 using MarketUz.Domain.Exceptions;
+using MarketUz.Domain.Interfaces.Services;
 using MarketUz.Domain.Pagination;
 using MarketUz.Domain.ResourceParameters;
 using MarketUz.Infrastructure.Persistence;

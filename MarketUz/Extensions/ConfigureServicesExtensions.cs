@@ -1,6 +1,6 @@
-﻿using DiyorMarket.Domain.Interfaces.Services;
-using DiyorMarket.Services;
+﻿using DiyorMarket.Services;
 using MarketUz.Domain.Interfaces.Repositories;
+using MarketUz.Domain.Interfaces.Services;
 using MarketUz.Infrastructure.Persistence;
 using MarketUz.Infrastructure.Persistence.Repositories;
 using MarketUz.Services;

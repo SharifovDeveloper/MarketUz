@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using DiyorMarket.Domain.Interfaces.Services;
 using MarketUz.Domain.DTOs.SupplyItem;
 using MarketUz.Domain.Entities;
 using MarketUz.Domain.Exceptions;
+using MarketUz.Domain.Interfaces.Services;
 using MarketUz.Infrastructure.Persistence;
 using Microsoft.Extensions.Logging;
 
