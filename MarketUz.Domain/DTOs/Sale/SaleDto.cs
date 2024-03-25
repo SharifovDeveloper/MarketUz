@@ -1,4 +1,4 @@
-﻿namespace DiyorMarket.Domain.DTOs.Sale
+﻿namespace MarketUz.Domain.DTOs.Sale
 {
     public class SaleDto
     {
