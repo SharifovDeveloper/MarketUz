@@ -2,7 +2,7 @@
 using MarketUz.Domain.DTOs.SaleItem;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DiyorMarket.Controllers
+namespace MarketUz.Controllers
 {
     [Route("api/saleItems")]
     [ApiController]

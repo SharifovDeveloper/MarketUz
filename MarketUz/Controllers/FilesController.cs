@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 
-namespace DiyorMarket.Api.Controllers
+namespace MarketUz.Controllers
 {
     [Route("api/files")]
     [ApiController]
