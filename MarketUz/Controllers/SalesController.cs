@@ -1,7 +1,6 @@
-﻿using DiyorMarket.Domain.DTOs.Sale;
-using MarketUz.Domain.Interfaces.Services;
-using MarketUz.Domain.DTOs.Sale;
+﻿using MarketUz.Domain.DTOs.Sale;
 using MarketUz.Domain.DTOs.SaleItem;
+using MarketUz.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarketUz.Controllers
