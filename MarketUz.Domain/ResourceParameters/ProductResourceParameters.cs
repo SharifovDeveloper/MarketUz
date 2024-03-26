@@ -3,7 +3,8 @@
 namespace MarketUz.ResourceParameters
 {
     public class ProductResourceParameters : ResourceParametersBase
-    { 
+    {
+        public DateTime? ExpireDate { get; set; }
         public int? CategoryId { get; set; }
         public decimal? Price { get; set; }
         public decimal? PriceLessThan { get; set; }

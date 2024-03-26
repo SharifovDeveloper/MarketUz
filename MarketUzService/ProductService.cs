@@ -4,8 +4,10 @@ using MarketUz.Domain.Entities;
 using MarketUz.Domain.Exceptions;
 using MarketUz.Domain.Interfaces.Services;
 using MarketUz.Domain.Pagination;
+using MarketUz.Domain.Responses;
 using MarketUz.Infrastructure.Persistence;
 using MarketUz.ResourceParameters;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace MarketUz.Services
@@ -14,20 +16,25 @@ namespace MarketUz.Services
     {
         private readonly IMapper _mapper;
         private readonly MarketUzDbContext _context;
-        private readonly ILogger<ProductService> _logger;
 
-        public ProductService(IMapper mapper, MarketUzDbContext context, ILogger<ProductService> logger)
+        public ProductService(IMapper mapper, MarketUzDbContext context)
         {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _context = context ?? throw new ArgumentNullException(nameof(context));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public PaginatedList<ProductDto> GetProducts(ProductResourceParameters productResourceParameters)
+        public GetBaseResponse<ProductDto> GetProducts(ProductResourceParameters productResourceParameters)
         {
-            var query = _context.Products.AsQueryable();
+            var query = _context.Products
+                .Include(p => p.Category)
+                .AsQueryable();
 
-            if (productResourceParameters.CategoryId is not null)
+            if (productResourceParameters.ExpireDate is not null)
+            {
+                query = query.Where(x => x.ExpireDate.Date == productResourceParameters.ExpireDate.Value.Date);
+            }
+
+            if (productResourceParameters.CategoryId is not null && productResourceParameters.CategoryId != 0)
             {
                 query = query.Where(x => x.CategoryId == productResourceParameters.CategoryId);
             }
@@ -51,6 +58,7 @@ namespace MarketUz.Services
             if (productResourceParameters.PriceGreaterThan is not null)
             {
                 query = query.Where(x => x.Price > productResourceParameters.PriceGreaterThan);
+
             }
 
             if (!string.IsNullOrEmpty(productResourceParameters.OrderBy))
@@ -70,19 +78,38 @@ namespace MarketUz.Services
             }
 
             var products = query.ToPaginatedList(productResourceParameters.PageSize, productResourceParameters.PageNumber);
-            // var products = query.ToList();
+
+            foreach (var product in products)
+            {
+                product.Category = _context.Categories.FirstOrDefault(x => x.Id == product.CategoryId);
+            }
+
             var productDtos = _mapper.Map<List<ProductDto>>(products);
 
-            return new PaginatedList<ProductDto>(productDtos, products.TotalCount, products.CurrentPage, products.PageSize);
+            var paginatedResult = new PaginatedList<ProductDto>(productDtos.ToList(), products.TotalCount, products.CurrentPage, products.PageSize);
+
+            return paginatedResult.ToResponse();
+
+        }
+
+        public IEnumerable<ProductDto> GetAllProducts()
+        {
+            var products = _context.Products
+                .Include(x => x.Category)
+                .AsSplitQuery()
+                .OrderBy(x => x.Name)
+                .ThenBy(x => x.Category.Name)
+                .ToList();
+
+            return _mapper.Map<IEnumerable<ProductDto>>(products) ?? Enumerable.Empty<ProductDto>();
         }
 
         public ProductDto? GetProductById(int id)
         {
-            var product = _context.Products.FirstOrDefault(x => x.Id == id);
-            if (product is null)
-            {
-                throw new EntityNotFoundException($"Product with id: {id} not found");
-            }
+            var product = _context.Products
+                .Include(p => p.Category)
+                .FirstOrDefault(x => x.Id == id);
+
             var productDto = _mapper.Map<ProductDto>(product);
 
             return productDto;
