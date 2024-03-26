@@ -5,8 +5,9 @@ using MarketUz.Domain.Exceptions;
 using MarketUz.Domain.Interfaces.Services;
 using MarketUz.Domain.Pagination;
 using MarketUz.Domain.ResourceParameters;
+using MarketUz.Domain.Responses;
 using MarketUz.Infrastructure.Persistence;
-using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 
 namespace MarketUz.Services
 {
@@ -14,20 +15,18 @@ namespace MarketUz.Services
     {
         private readonly IMapper _mapper;
         private readonly MarketUzDbContext _context;
-        private readonly ILogger<CategoryService> _logger;
 
         public CategoryService(IMapper mapper,
-            ILogger<CategoryService> logger,
             MarketUzDbContext context)
         {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _context = context ?? throw new ArgumentNullException(nameof(context));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public PaginatedList<CategoryDto> GetCategories(CategoryResourceParameters categoryResourceParameters)
+        public GetBaseResponse<CategoryDto> GetCategories(CategoryResourceParameters categoryResourceParameters)
         {
-            var query = _context.Categories.AsQueryable();
+            var query = _context.Categories.Include(s => s.Products).IgnoreAutoIncludes().AsQueryable();
+
             if (!string.IsNullOrWhiteSpace(categoryResourceParameters.SearchString))
             {
                 query = query.Where(x => x.Name.Contains(categoryResourceParameters.SearchString));
@@ -39,20 +38,30 @@ namespace MarketUz.Services
                 {
                     "name" => query.OrderBy(x => x.Name),
                     "namedesc" => query.OrderByDescending(x => x.Name),
-                    _ => throw new NotImplementedException()
+                    _ => query.OrderBy(x => x.Name),
                 };
-
             }
+
             var categories = query.ToPaginatedList(categoryResourceParameters.PageSize, categoryResourceParameters.PageNumber);
-
             var categoryDtos = _mapper.Map<List<CategoryDto>>(categories);
+            var paginatedResult = new PaginatedList<CategoryDto>(categoryDtos, categories.TotalCount, categories.CurrentPage, categories.PageSize);
 
-            return new PaginatedList<CategoryDto>(categoryDtos, categories.TotalCount, categories.CurrentPage, categories.PageSize);
+            return paginatedResult.ToResponse();
+        }
+
+        public IEnumerable<CategoryDto> GetAllCategories()
+        {
+            var categories = _context.Categories.Include(s => s.Products).ToList();
+
+            return _mapper.Map<IEnumerable<CategoryDto>>(categories) ?? Enumerable.Empty<CategoryDto>();
         }
 
         public CategoryDto? GetCategoryById(int id)
         {
-            var category = _context.Categories.FirstOrDefault(x => x.Id == id);
+            var category = _context.Categories
+                .Include(c => c.Products)
+                .IgnoreAutoIncludes()
+                .FirstOrDefault(x => x.Id == id);
 
             if (category is null)
             {
@@ -77,12 +86,16 @@ namespace MarketUz.Services
             return categoryDto;
         }
 
-        public void UpdateCategory(CategoryForUpdateDto categoryToUpdate)
+        public CategoryDto UpdateCategory(CategoryForUpdateDto categoryToUpdate)
         {
             var categoryEntity = _mapper.Map<Category>(categoryToUpdate);
 
             _context.Categories.Update(categoryEntity);
             _context.SaveChanges();
+
+            var updatedCategoryDto = _mapper.Map<CategoryDto>(categoryEntity);
+
+            return updatedCategoryDto;
         }
 
         public void DeleteCategory(int id)
