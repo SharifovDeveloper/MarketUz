@@ -1,11 +1,13 @@
-﻿namespace MarketUz.Domain.DTOs.SaleItem
+﻿using MarketUz.Domain.DTOs.Product;
+
+namespace MarketUz.Domain.DTOs.SaleItem
 {
-    public class SaleItemDto
-    {
-        public int Id { get; set; }
-        public int Quantity { get; set; }
-        public decimal UnitPrice { get; set; }
-        public int ProductId { get; set; }
-        public int SaleId { get; set; }
-    }
+    public record SaleItemDto(
+      int Id,
+      string ProductName,
+      int Quantity,
+      decimal UnitPrice,
+      ProductDto Product,
+      int SaleId,
+      decimal TotalDue);
 }
