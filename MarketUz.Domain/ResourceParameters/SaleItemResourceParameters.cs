@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MarketUz.Domain.ResourceParameters
+﻿namespace MarketUz.Domain.ResourceParameters
 {
-    internal class SaleItemResourceParameters
+    public class SaleItemResourceParameters : ResourceParametersBase
     {
+        public override string OrderBy { get; set; } = "id";
+        public int? ProductId { get; set; }
+        public int? SaleId { get; set; }
+        public decimal? UnitPrice { get; set; }
+        public decimal? UnitPriceLessThan { get; set; }
+        public decimal? UnitPriceGreaterThan { get; set; }
     }
 }
