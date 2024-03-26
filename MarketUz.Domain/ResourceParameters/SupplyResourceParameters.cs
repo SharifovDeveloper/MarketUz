@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MarketUz.Domain.ResourceParameters
+﻿namespace MarketUz.Domain.ResourceParameters
 {
-    internal class SupplyResourceParameters
+    public class SupplyResourceParameters : ResourceParametersBase
     {
+        public int? SupplierId { get; set; }
+        public DateTime? SupplyDate { get; set; }
+        public override string OrderBy { get; set; } = "id";
+
     }
 }
