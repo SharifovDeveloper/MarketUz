@@ -1,6 +1,6 @@
 ﻿using MarketUz.Domain.DTOs.Category;
-using MarketUz.Domain.Pagination;
 using MarketUz.Domain.ResourceParameters;
+using MarketUz.Domain.Responses;
 
 namespace MarketUz.Domain.Interfaces.Services
 {
