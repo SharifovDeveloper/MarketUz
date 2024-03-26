@@ -6,10 +6,9 @@ using MarketUz.ResourceParameters;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Drawing;
-using PdfSharp.Pdf;
+using Syncfusion.Pdf;
 using Syncfusion.Pdf.Grid;
 using ClosedXML.Excel;
-using Syncfusion.Pdf;
 
 namespace MarketUz.Controllers
 {
