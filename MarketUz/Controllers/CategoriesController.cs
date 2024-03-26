@@ -5,7 +5,7 @@ using MarketUz.Domain.ResourceParameters;
 using MarketUz.ResourceParameters;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
-using System.Drawing;
+using Syncfusion.Drawing;
 using Syncfusion.Pdf;
 using Syncfusion.Pdf.Grid;
 using ClosedXML.Excel;
