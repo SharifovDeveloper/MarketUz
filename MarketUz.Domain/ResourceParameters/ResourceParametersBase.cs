@@ -3,10 +3,8 @@
     public abstract class ResourceParametersBase
     {
         protected virtual int MaxPageSize { get; set; } = 25;
-
         public virtual string? SearchString { get; set; }
         public abstract string OrderBy { get; set; }
-
         public int PageNumber { get; set; } = 1;
 
         private int _pageSize = 15;

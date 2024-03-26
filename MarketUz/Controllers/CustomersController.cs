@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using ClosedXML.Excel;
 using Syncfusion.Pdf.Grid;
 using Syncfusion.Pdf;
+using MarketUz.Domain.ResourceParameters;
+using System.Data;
+using Syncfusion.Drawing;
 
 namespace MarketUz.Controllers
 {
@@ -112,7 +115,7 @@ namespace MarketUz.Controllers
 
             foreach (var customer in customerDtos)
             {
-                data.Add(new { ID = customer.Id, customer.FullName, customer.PhoneNumber });
+                data.Add(new { ID = customer.Id, customer.FullName, customer.Phone });
             }
 
             return data;
@@ -150,7 +153,7 @@ namespace MarketUz.Controllers
 
             foreach (var customer in customers)
             {
-                table.Rows.Add(customer.Id, customer.FullName, customer.PhoneNumber);
+                table.Rows.Add(customer.Id, customer.FullName, customer.Phone);
             }
 
             return table;
