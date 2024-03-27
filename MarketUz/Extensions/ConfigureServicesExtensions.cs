@@ -32,6 +32,13 @@ namespace MarketUz.Extensions
             services.AddScoped<ISupplyService, SupplyService>();
             services.AddScoped<ISupplyItemService, SupplyItemService>();
 
+
+            services.AddControllers()
+              .AddNewtonsoftJson(options =>
+                  options.SerializerSettings.ReferenceLoopHandling =
+                    Newtonsoft.Json.ReferenceLoopHandling.Ignore
+               );
+
             return services;
         }
 
