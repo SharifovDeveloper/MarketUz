@@ -8,10 +8,17 @@ namespace MarketUz.Domain.Mappings
     {
         public ProductMappings()
         {
-            CreateMap<Product, ProductDto>();
+            CreateMap<Product, ProductDto>()
+                .ForMember(x => x.SupplyPrice, r => r.MapFrom(x => x.Price))
+                .ForMember(x => x.SalePrice, r => r.MapFrom(x => x.Price * (decimal)1.5));
+
             CreateMap<ProductDto, Product>();
-            CreateMap<ProductForCreateDto, Product>();
-            CreateMap<ProductForUpdateDto, Product>();
+            CreateMap<ProductForCreateDto, Product>()
+                .ForMember(x => x.Price, r => r.MapFrom(x => x.SupplyPrice));
+            CreateMap<ProductForUpdateDto, Product>()
+                .ForMember(x => x.Price, r => r.MapFrom(x => x.SupplyPrice));
+            CreateMap<Product, ProductForCreateDto>();
+            CreateMap<Product, ProductForUpdateDto>();
         }
     }
 }

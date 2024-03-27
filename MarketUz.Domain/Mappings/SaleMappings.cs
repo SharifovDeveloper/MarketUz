@@ -8,8 +8,9 @@ namespace MarketUz.Domain.Mappings
     {
         public SaleMappings()
         {
-            CreateMap<Sale, SaleDto>();
             CreateMap<SaleDto, Sale>();
+            CreateMap<Sale, SaleDto>()
+                .ForCtorParam(nameof(SaleDto.TotalDue), x => x.MapFrom(s => s.SaleItems.Sum(q => q.Quantity * q.UnitPrice)));
             CreateMap<SaleForCreateDto, Sale>();
             CreateMap<SaleForUpdateDto, Sale>();
         }
