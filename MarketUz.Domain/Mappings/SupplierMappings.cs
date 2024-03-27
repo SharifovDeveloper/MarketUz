@@ -8,9 +8,10 @@ namespace MarketUz.Domain.Mappings
     {
         public SupplierMappings()
         {
+            CreateMap<SupplierDto, Supplier>()
+                .PreserveReferences();
             CreateMap<Supplier, SupplierDto>()
-               .ForMember(x => x.FullName, r => r.MapFrom(x => x.FirstName + "" + x.LastName));
-            CreateMap<SupplierDto, Supplier>();
+                .PreserveReferences();
             CreateMap<SupplierForCreateDto, Supplier>();
             CreateMap<SupplierForUpdateDto, Supplier>();
         }
