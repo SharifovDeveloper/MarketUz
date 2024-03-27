@@ -1,6 +1,9 @@
-﻿namespace MarketUz.Domain.DTOs.Supply
+﻿using MarketUz.Domain.DTOs.SupplyItem;
+
+namespace MarketUz.Domain.DTOs.Supply
 {
     public record SupplyForCreateDto(
         DateTime SupplyDate,
-        int SupplierId);
+        int SupplierId,
+        ICollection<SupplyItemForCreateDto> SupplyItems);
 }
