@@ -9,10 +9,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace MarketUz.Infrastructure.persistence.Migrations
+namespace MarketUz.Infrastructure.Migrations
 {
     [DbContext(typeof(MarketUzDbContext))]
-    [Migration("20231217102554_Initial_Create")]
+    [Migration("20240327123653_Initial_Create")]
     partial class Initial_Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -89,6 +89,9 @@ namespace MarketUz.Infrastructure.persistence.Migrations
                     b.Property<DateTime>("ExpireDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("LowQuantityAmount")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -96,6 +99,9 @@ namespace MarketUz.Infrastructure.persistence.Migrations
 
                     b.Property<decimal>("Price")
                         .HasColumnType("money");
+
+                    b.Property<int>("QuantityInStock")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -163,7 +169,6 @@ namespace MarketUz.Infrastructure.persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Company")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
@@ -234,6 +239,40 @@ namespace MarketUz.Infrastructure.persistence.Migrations
                     b.HasIndex("SupplyId");
 
                     b.ToTable("SupplyItem", (string)null);
+                });
+
+            modelBuilder.Entity("MarketUz.Domain.Entities.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Login")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasAnnotation("MinLength", 8);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasAnnotation("MinLength", 8);
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User", (string)null);
                 });
 
             modelBuilder.Entity("MarketUz.Domain.Entities.Product", b =>

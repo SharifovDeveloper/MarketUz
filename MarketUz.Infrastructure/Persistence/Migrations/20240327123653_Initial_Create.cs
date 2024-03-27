@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace MarketUz.Infrastructure.persistence.Migrations
+namespace MarketUz.Infrastructure.Migrations
 {
     public partial class Initial_Create : Migration
     {
@@ -46,11 +45,27 @@ namespace MarketUz.Infrastructure.persistence.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Company = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Company = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Supplier", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "User",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Login = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -63,6 +78,8 @@ namespace MarketUz.Infrastructure.persistence.Migrations
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     Price = table.Column<decimal>(type: "money", nullable: false),
                     ExpireDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    QuantityInStock = table.Column<int>(type: "int", nullable: false),
+                    LowQuantityAmount = table.Column<int>(type: "int", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -215,6 +232,9 @@ namespace MarketUz.Infrastructure.persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "SupplyItem");
+
+            migrationBuilder.DropTable(
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "Sale");

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace MarketUz.Infrastructure.persistence.Migrations
+namespace MarketUz.Infrastructure.Migrations
 {
     [DbContext(typeof(MarketUzDbContext))]
     partial class MarketUzDbContextModelSnapshot : ModelSnapshot
@@ -87,6 +87,9 @@ namespace MarketUz.Infrastructure.persistence.Migrations
                     b.Property<DateTime>("ExpireDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("LowQuantityAmount")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -94,6 +97,9 @@ namespace MarketUz.Infrastructure.persistence.Migrations
 
                     b.Property<decimal>("Price")
                         .HasColumnType("money");
+
+                    b.Property<int>("QuantityInStock")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -243,22 +249,28 @@ namespace MarketUz.Infrastructure.persistence.Migrations
 
                     b.Property<string>("Login")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasAnnotation("MinLength", 8);
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasAnnotation("MinLength", 8);
 
                     b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("User", (string)null);
                 });
 
             modelBuilder.Entity("MarketUz.Domain.Entities.Product", b =>
