@@ -115,7 +115,7 @@ namespace MarketUz.Controllers
 
             foreach (var customer in customerDtos)
             {
-                data.Add(new { ID = customer.Id, customer.FullName, customer.Phone });
+                data.Add(new { ID = customer.Id, customer.FullName, customer.PhoneNumber });
             }
 
             return data;
@@ -153,7 +153,7 @@ namespace MarketUz.Controllers
 
             foreach (var customer in customers)
             {
-                table.Rows.Add(customer.Id, customer.FullName, customer.Phone);
+                table.Rows.Add(customer.Id, customer.FullName, customer.PhoneNumber);
             }
 
             return table;
