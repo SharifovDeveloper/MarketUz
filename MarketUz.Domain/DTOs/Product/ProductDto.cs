@@ -4,7 +4,7 @@ using MarketUz.Domain.DTOs.SupplyItem;
 
 namespace MarketUz.Domain.DTOs.Product
 {
-    public class ProductDto
+    public record ProductDto
     {
         public int Id { get; init; }
         public string Name { get; init; }
