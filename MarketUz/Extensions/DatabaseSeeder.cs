@@ -21,6 +21,7 @@ namespace MarketUz.Extensions
             CreateSuppliers(context);
             CreateSupplies(context);
             CreateSupplyItems(context);
+            EditPriceForAllEntities(context);
         }
 
         private static void CreateCategories(MarketUzDbContext context)
@@ -57,7 +58,6 @@ namespace MarketUz.Extensions
             context.Categories.AddRange(categories);
             context.SaveChanges();
         }
-
         public static void CreateProducts(MarketUzDbContext context)
         {
             if (context.Products.Any()) return;
@@ -68,11 +68,13 @@ namespace MarketUz.Extensions
 
             foreach (var category in categories)
             {
-                var productsCount = new Random().Next(5, 35);
+                var productsCount = new Random().Next(5, 10);
 
                 for (int i = 0; i < productsCount; i++)
                 {
+                    var quantityInStock = new Random().Next(5, 10);
                     var productName = _faker.Commerce.ProductName().FirstLetterToUpper();
+
                     int attempts = 0;
 
                     while (productNames.Contains(productName) && attempts < 100)
@@ -90,7 +92,9 @@ namespace MarketUz.Extensions
                     {
                         Name = productName,
                         Description = _faker.Commerce.ProductDescription(),
-                        Price = _faker.Random.Decimal(10_000, 2_000_000),
+                        Price = _faker.Random.Decimal(10_000, 200_000),
+                        ExpireDate = _faker.Date.Between(DateTime.Now.AddYears(-3), DateTime.Now),
+                        QuantityInStock = quantityInStock,
                         CategoryId = category.Id,
                     });
                 }
@@ -103,7 +107,7 @@ namespace MarketUz.Extensions
             if (context.Customers.Any()) return;
             List<Customer> customers = new List<Customer>();
 
-            for (int i = 0; i < 125; i++)
+            for (int i = 0; i < 100; i++)
             {
                 customers.Add(new Customer()
                 {
@@ -125,7 +129,7 @@ namespace MarketUz.Extensions
 
             foreach (var customer in customers)
             {
-                int salesCount = new Random().Next(5, 50);
+                int salesCount = new Random().Next(3, 6);
                 for (int i = 0; i < salesCount; i++)
                 {
                     sales.Add(new Sale()
@@ -139,7 +143,6 @@ namespace MarketUz.Extensions
             context.Sales.AddRange(sales);
             context.SaveChanges();
         }
-
         private static void CreateSaleItems(MarketUzDbContext context)
         {
             if (context.SaleItems.Any()) return;
@@ -150,26 +153,20 @@ namespace MarketUz.Extensions
 
             foreach (var sale in sales)
             {
-                int saleItemsCount = new Random().Next(1, 20);
+                int saleItemsCount = new Random().Next(5, 10);
 
                 for (int i = 0; i < saleItemsCount; i++)
                 {
                     var randomProduct = _faker.PickRandom(products);
-                    int attempts = 0;
 
-                    while (saleItems.Any(si => si.Id == randomProduct.Id) && attempts < 100)
-                    {
-                        randomProduct = _faker.PickRandom(products);
-                    }
-
-                    var quantity = new Random().Next(1, 50);
+                    var quantity = new Random().Next(10, 20);
 
                     saleItems.Add(new SaleItem()
                     {
                         ProductId = randomProduct.Id,
                         SaleId = sale.Id,
                         Quantity = quantity,
-                        UnitPrice = randomProduct.Price,
+                        UnitPrice = randomProduct.Price * (decimal)1.25,
                     });
                 }
             }
@@ -177,13 +174,12 @@ namespace MarketUz.Extensions
             context.SaleItems.AddRange(saleItems);
             context.SaveChanges();
         }
-
         private static void CreateSuppliers(MarketUzDbContext context)
         {
             if (context.Suppliers.Any()) return;
             List<Supplier> suppliers = new List<Supplier>();
 
-            for (int i = 0; i < 125; i++)
+            for (int i = 0; i < 50; i++)
             {
                 suppliers.Add(new Supplier()
                 {
@@ -197,7 +193,6 @@ namespace MarketUz.Extensions
             context.Suppliers.AddRange(suppliers);
             context.SaveChanges();
         }
-
         private static void CreateSupplies(MarketUzDbContext context)
         {
             if (context.Supplies.Any()) return;
@@ -207,7 +202,7 @@ namespace MarketUz.Extensions
 
             foreach (var supplier in suppliers)
             {
-                int suppliesCount = new Random().Next(5, 50);
+                int suppliesCount = new Random().Next(10, 12);
                 for (int i = 0; i < suppliesCount; i++)
                 {
                     supplies.Add(new Supply()
@@ -221,7 +216,6 @@ namespace MarketUz.Extensions
             context.Supplies.AddRange(supplies);
             context.SaveChanges();
         }
-
         private static void CreateSupplyItems(MarketUzDbContext context)
         {
             if (context.SupplyItems.Any()) return;
@@ -232,32 +226,54 @@ namespace MarketUz.Extensions
 
             foreach (var supply in supplies)
             {
-                int supplyItemsCount = new Random().Next(1, 20);
+                int supplyItemsCount = new Random().Next(20, 30);
 
                 for (int i = 0; i < supplyItemsCount; i++)
                 {
                     var randomProduct = _faker.PickRandom(products);
-                    int attempts = 0;
 
-                    while (supplyItems.Any(si => si.Id == randomProduct.Id) && attempts < 100)
-                    {
-                        randomProduct = _faker.PickRandom(products);
-                    }
-
-                    var quantity = new Random().Next(1, 50);
+                    var quantity = new Random().Next(5, 10);
 
                     supplyItems.Add(new SupplyItem()
                     {
                         ProductId = randomProduct.Id,
                         SupplyId = supply.Id,
                         Quantity = quantity,
-                        UnitPrice = randomProduct.Price
+                        UnitPrice = randomProduct.Price * (decimal)0.8
                     });
                 }
             }
 
             context.SupplyItems.AddRange(supplyItems);
             context.SaveChanges();
+        }
+        private static void EditPriceForAllEntities(MarketUzDbContext context)
+        {
+            var products = context.Products.ToList();
+            if (products[1].Price >= 20_000)
+            {
+                foreach (var product in products)
+                {
+                    var price = product.Price / 12450;
+                    product.Price = price;
+                    context.Products.Update(product);
+                }
+                var saleitems = context.SaleItems.ToList();
+                foreach (var sale in saleitems)
+                {
+                    var price = sale.UnitPrice / 12450;
+                    sale.UnitPrice = price;
+                    context.SaleItems.Update(sale);
+                }
+                var supplyItem = context.SupplyItems.ToList();
+                foreach (var supply in supplyItem)
+                {
+                    var price = supply.UnitPrice / 12450;
+                    supply.UnitPrice = price;
+                    context.SupplyItems.Update(supply);
+                }
+                context.SaveChanges();
+            }
         }
     }
 }
