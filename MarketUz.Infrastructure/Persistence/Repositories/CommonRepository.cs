@@ -27,6 +27,7 @@ namespace MarketUz.Infrastructure.Persistence.Repositories
                 return _product;
             }
         }
+
         private ICustomerRepository _customer;
         public ICustomerRepository Customer
         {
@@ -37,6 +38,7 @@ namespace MarketUz.Infrastructure.Persistence.Repositories
                 return _customer;
             }
         }
+
         private ISaleRepository _sale;
         public ISaleRepository Sale
         {
@@ -47,6 +49,7 @@ namespace MarketUz.Infrastructure.Persistence.Repositories
                 return _sale;
             }
         }
+
         private ISaleItemRepository _saleItem;
         public ISaleItemRepository SaleItem
         {
@@ -68,6 +71,7 @@ namespace MarketUz.Infrastructure.Persistence.Repositories
                 return _supplier;
             }
         }
+
         private ISupplyRepository _supply;
         public ISupplyRepository Supply
         {
@@ -78,6 +82,7 @@ namespace MarketUz.Infrastructure.Persistence.Repositories
                 return _supply;
             }
         }
+
         private ISupplyItemRepository _supplyItem;
         public ISupplyItemRepository SupplyItem
         {
@@ -88,16 +93,18 @@ namespace MarketUz.Infrastructure.Persistence.Repositories
                 return _supplyItem;
             }
         }
-
-
-
-
         public CommonRepository(MarketUzDbContext context)
         {
             _context = context;
 
             _category = new CategoryRepository(context);
             _product = new ProductRepository(context);
+            _customer = new CustomerRepository(context);
+            _sale = new SaleRepository(context);
+            _saleItem = new SaleItemRepository(context);
+            _supplier = new SupplierRepository(context);
+            _supply = new SupplyRepository(context);
+            _supplyItem = new SupplyItemRepository(context);
         }
 
         public int SaveChanges()
