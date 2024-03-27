@@ -1,6 +1,9 @@
-﻿namespace MarketUz.Domain.DTOs.Sale
+﻿using MarketUz.Domain.DTOs.SaleItem;
+
+namespace MarketUz.Domain.DTOs.Sale
 {
     public record SaleForCreateDto(
-        DateTime saleDate,
-        int CustomerId);
+       DateTime SaleDate,
+       int CustomerId,
+       ICollection<SaleItemForCreateDto> SaleItems);
 }
