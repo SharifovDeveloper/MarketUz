@@ -2,11 +2,9 @@
 
 namespace MarketUz.Domain.DTOs.Customer
 {
-    public class CustomerDto
-    {
-        public int Id { get; set; }
-        public string? FullName { get; set; }
-        public string? Phone { get; set; }
-        public virtual ICollection<SaleDto>? Sales { get; set; }
-    }
+    public record CustomerDto(
+        int Id,
+        string FullName,
+        string PhoneNumber,
+        ICollection<SaleDto> Sales);
 }
