@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using MarketUz.Domain.DTOs.Supplier;
 using MarketUz.Domain.Entities;
-using MarketUz.Domain.Exceptions;
 using MarketUz.Domain.Interfaces.Services;
+using MarketUz.Domain.Pagination;
+using MarketUz.Domain.ResourceParameters;
+using MarketUz.Domain.Responses;
 using MarketUz.Infrastructure.Persistence;
-using Microsoft.Extensions.Logging;
 
 namespace DiyorMarket.Services
 {
@@ -12,31 +13,61 @@ namespace DiyorMarket.Services
     {
         private readonly IMapper _mapper;
         private readonly MarketUzDbContext _context;
-        private readonly ILogger<SupplierService> _logger;
 
-        public SupplierService(IMapper mapper, MarketUzDbContext context, ILogger<SupplierService> logger)
+        public SupplierService(IMapper mapper, MarketUzDbContext context)
         {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _context = context ?? throw new ArgumentNullException(nameof(context));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public IEnumerable<SupplierDto> GetSuppliers()
+        public GetBaseResponse<SupplierDto> GetSuppliers(SupplierResourceParameters supplierResourceParameters)
+        {
+            var query = _context.Suppliers.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(supplierResourceParameters.SearchString))
+            {
+                query = query.Where(x => x.FirstName.Contains(supplierResourceParameters.SearchString)
+                || x.LastName.Contains(supplierResourceParameters.SearchString)
+                || x.PhoneNumber.Contains(supplierResourceParameters.SearchString)
+                || x.Company.Contains(supplierResourceParameters.SearchString));
+            }
+
+            if (!string.IsNullOrEmpty(supplierResourceParameters.OrderBy))
+            {
+                query = supplierResourceParameters.OrderBy.ToLowerInvariant() switch
+                {
+                    "firstname" => query.OrderBy(x => x.FirstName),
+                    "firstnamedesc" => query.OrderByDescending(x => x.FirstName),
+                    "lastname" => query.OrderBy(x => x.LastName),
+                    "lastnamedesc" => query.OrderByDescending(x => x.LastName),
+                    "phonenumber" => query.OrderBy(x => x.PhoneNumber),
+                    "phonenumberdesc" => query.OrderByDescending(x => x.PhoneNumber),
+                    "company" => query.OrderBy(x => x.Company),
+                    "companydesc" => query.OrderByDescending(x => x.Company),
+                    _ => query.OrderBy(x => x.FirstName),
+                };
+            }
+
+            var suppliers = query.ToPaginatedList(supplierResourceParameters.PageSize, supplierResourceParameters.PageNumber);
+
+            var supplierDtos = _mapper.Map<List<SupplierDto>>(suppliers);
+
+            var paginatedResult = new PaginatedList<SupplierDto>(supplierDtos, suppliers.TotalCount, suppliers.CurrentPage, suppliers.PageSize);
+
+            return paginatedResult.ToResponse();
+        }
+
+        public IEnumerable<SupplierDto> GetAllSuppliers()
         {
             var suppliers = _context.Suppliers.ToList();
 
-            var supplierDtos = _mapper.Map<IEnumerable<SupplierDto>>(suppliers);
-
-            return supplierDtos;
+            return _mapper.Map<IEnumerable<SupplierDto>>(suppliers) ?? Enumerable.Empty<SupplierDto>();
         }
 
         public SupplierDto? GetSupplierById(int id)
         {
             var supplier = _context.Suppliers.FirstOrDefault(x => x.Id == id);
-            if (supplier is null)
-            {
-                throw new EntityNotFoundException($"Supplier with id: {id} not found");
-            }
+
             var supplierDto = _mapper.Map<SupplierDto>(supplier);
 
             return supplierDto;
@@ -54,12 +85,16 @@ namespace DiyorMarket.Services
             return supplierDto;
         }
 
-        public void UpdateSupplier(SupplierForUpdateDto supplierToUpdate)
+        public SupplierDto UpdateSupplier(SupplierForUpdateDto supplierToUpdate)
         {
             var supplierEntity = _mapper.Map<Supplier>(supplierToUpdate);
 
             _context.Suppliers.Update(supplierEntity);
             _context.SaveChanges();
+
+            var supplierDto = _mapper.Map<SupplierDto>(supplierEntity);
+
+            return supplierDto;
         }
 
         public void DeleteSupplier(int id)
@@ -69,6 +104,7 @@ namespace DiyorMarket.Services
             {
                 _context.Suppliers.Remove(supplier);
             }
+            _context.SaveChanges();
         }
     }
 }
