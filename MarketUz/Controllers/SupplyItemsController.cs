@@ -1,5 +1,6 @@
-﻿using MarketUz.Domain.Interfaces.Services;
-using MarketUz.Domain.DTOs.SupplyItem;
+﻿using MarketUz.Domain.DTOs.SupplyItem;
+using MarketUz.Domain.Interfaces.Services;
+using MarketUz.Domain.ResourceParameters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarketUz.Controllers
@@ -8,6 +9,7 @@ namespace MarketUz.Controllers
     [ApiController]
     public class SupplyItemsController : Controller
     {
+
         private readonly ISupplyItemService _supplyItemService;
         public SupplyItemsController(ISupplyItemService supplyItemService)
         {
@@ -15,9 +17,10 @@ namespace MarketUz.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<SupplyItemDto>> Get()
+        public ActionResult<IEnumerable<SupplyItemDto>> Get(
+            [FromQuery] SupplyItemResourceParameters supplyItemResourceParameters)
         {
-            var supplyItems = _supplyItemService.GetSupplyItems();
+            var supplyItems = _supplyItemService.GetSupplyItems(supplyItemResourceParameters);
 
             return Ok(supplyItems);
         }
@@ -38,9 +41,9 @@ namespace MarketUz.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] SupplyItemForCreateDto supplyItem)
         {
-            _supplyItemService.CreateSupplyItem(supplyItem);
+            var createSupplyItem = _supplyItemService.CreateSupplyItem(supplyItem);
 
-            return StatusCode(201);
+            return CreatedAtAction(nameof(Get), new { createSupplyItem.Id }, createSupplyItem);
         }
 
         [HttpPut("{id}")]
