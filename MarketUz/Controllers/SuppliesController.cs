@@ -1,6 +1,9 @@
 ﻿using MarketUz.Domain.Interfaces.Services;
 using MarketUz.Domain.DTOs.Supply;
 using Microsoft.AspNetCore.Mvc;
+using ClosedXML.Excel;
+using MarketUz.Domain.ResourceParameters;
+using System.Data;
 
 namespace MarketUz.Controllers
 {
@@ -15,11 +18,41 @@ namespace MarketUz.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<SupplyDto>> Get()
+        public ActionResult<IEnumerable<SupplyDto>> GetSuppliesAsync(
+            [FromQuery] SupplyResourceParameters supplyResourceParameters)
         {
-            var supplies = _supplyService.GetSupplies();
+            var supplies = _supplyService.GetSupplies(supplyResourceParameters);
 
             return Ok(supplies);
+        }
+
+        [HttpGet("export")]
+        public ActionResult ExportSupplies()
+        {
+            var category = _supplyService.GetAllSupplies();
+
+            using XLWorkbook wb = new XLWorkbook();
+            var sheet1 = wb.AddWorksheet(GetSuppliesDataTable(category), "Supplies");
+
+            sheet1.Column(1).Style.Font.FontColor = XLColor.Red;
+
+            sheet1.Columns(2, 4).Style.Font.FontColor = XLColor.Blue;
+
+            sheet1.Row(1).CellsUsed().Style.Fill.BackgroundColor = XLColor.Black;
+            //sheet1.Row(1).Cells(1,3).Style.Fill.BackgroundColor = XLColor.Yellow;
+            sheet1.Row(1).Style.Font.FontColor = XLColor.White;
+
+            sheet1.Row(1).Style.Font.Bold = true;
+            sheet1.Row(1).Style.Font.Shadow = true;
+            sheet1.Row(1).Style.Font.Underline = XLFontUnderlineValues.Single;
+            sheet1.Row(1).Style.Font.VerticalAlignment = XLFontVerticalTextAlignmentValues.Superscript;
+            sheet1.Row(1).Style.Font.Italic = true;
+
+            sheet1.Rows(2, 3).Style.Font.FontColor = XLColor.AshGrey;
+
+            using MemoryStream ms = new MemoryStream();
+            wb.SaveAs(ms);
+            return File(ms.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Supplies.xlsx");
         }
 
         [HttpGet("{id}", Name = "GetSupplyById")]
@@ -38,9 +71,9 @@ namespace MarketUz.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] SupplyForCreateDto supply)
         {
-            _supplyService.CreateSupply(supply);
+            var createSupply = _supplyService.CreateSupply(supply);
 
-            return StatusCode(201);
+            return CreatedAtAction(nameof(Get), new { createSupply.Id }, createSupply);
         }
 
         [HttpPut("{id}")]
@@ -63,6 +96,26 @@ namespace MarketUz.Controllers
             _supplyService.DeleteSupply(id);
 
             return NoContent();
+        }
+
+        private DataTable GetSuppliesDataTable(IEnumerable<SupplyDto> supplyDtos)
+        {
+            DataTable table = new DataTable();
+            table.TableName = "Supplies Data";
+            table.Columns.Add("Id", typeof(int));
+            table.Columns.Add("TotalDue", typeof(decimal));
+            table.Columns.Add("SupplyDate", typeof(DateTime));
+            table.Columns.Add("SupplierId", typeof(int));
+
+            foreach (var supply in supplyDtos)
+            {
+                table.Rows.Add(supply.Id,
+                    supply.TotalDue,
+                    supply.SupplyDate,
+                    supply.SupplierId);
+            }
+
+            return table;
         }
     }
 }
