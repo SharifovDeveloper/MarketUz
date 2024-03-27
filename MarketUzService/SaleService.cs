@@ -8,7 +8,6 @@ using MarketUz.Domain.ResourceParameters;
 using MarketUz.Domain.Responses;
 using MarketUz.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace DiyorMarket.Services
 {
