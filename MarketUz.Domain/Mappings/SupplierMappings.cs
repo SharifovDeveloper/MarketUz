@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using MarketUz.Domain.DTOs.Supplier;
 using MarketUz.Domain.Entities;
+using Inflow.Core.Supplier;
 
 namespace MarketUz.Domain.Mappings
 {
