@@ -1,9 +1,9 @@
 ﻿using ClosedXML.Excel;
-using MarketUz.Domain.DTOs.Sale;
 using MarketUz.Domain.Interfaces.Services;
 using MarketUz.Domain.ResourceParameters;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
+using Inflow.Core.Sale;
 
 namespace MarketUz.Controllers
 {
