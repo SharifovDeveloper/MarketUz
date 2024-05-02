@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using MarketUz.Domain.DTOs.Product;
 using MarketUz.Domain.Entities;
 using MarketUz.Domain.Interfaces.Services;
 using MarketUz.Domain.Pagination;
@@ -7,6 +6,7 @@ using MarketUz.Domain.Responses;
 using MarketUz.Infrastructure.Persistence;
 using MarketUz.ResourceParameters;
 using Microsoft.EntityFrameworkCore;
+using Inflow.Core.Product;
 
 namespace MarketUz.Services
 {
