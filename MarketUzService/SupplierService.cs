@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using MarketUz.Domain.DTOs.Supplier;
 using MarketUz.Domain.Entities;
 using MarketUz.Domain.Interfaces.Services;
 using MarketUz.Domain.Pagination;
 using MarketUz.Domain.ResourceParameters;
 using MarketUz.Domain.Responses;
 using MarketUz.Infrastructure.Persistence;
+using Inflow.Core.Supplier;
 
 namespace DiyorMarket.Services
 {

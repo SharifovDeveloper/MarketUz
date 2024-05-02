@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using MarketUz.Domain.DTOs.Sale;
 using MarketUz.Domain.Entities;
 using MarketUz.Domain.Exceptions;
 using MarketUz.Domain.Interfaces.Services;
@@ -8,6 +7,7 @@ using MarketUz.Domain.ResourceParameters;
 using MarketUz.Domain.Responses;
 using MarketUz.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Inflow.Core.Sale;
 
 namespace DiyorMarket.Services
 {
