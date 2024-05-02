@@ -1,15 +1,15 @@
-﻿using MarketUz.Domain.Interfaces.Services;
-using MarketUz.Domain.DTOs.Product;
-using MarketUz.ResourceParameters;
-using Microsoft.AspNetCore.Mvc;
-using AutoMapper;
+﻿using AutoMapper;
 using ClosedXML.Excel;
 using MarketUz.Domain.Entities;
+using MarketUz.Domain.Interfaces.Services;
+using MarketUz.ResourceParameters;
 using Microsoft.AspNetCore.JsonPatch;
-using Syncfusion.Pdf.Grid;
-using Syncfusion.Pdf;
+using Microsoft.AspNetCore.Mvc;
 using Syncfusion.Drawing;
+using Syncfusion.Pdf;
+using Syncfusion.Pdf.Grid;
 using System.Data;
+using Inflow.Core.Product;
 
 namespace MarketUz.Controllers
 {

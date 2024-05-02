@@ -1,5 +1,4 @@
 ﻿using ClosedXML.Excel;
-using MarketUz.Domain.DTOs.Supplier;
 using MarketUz.Domain.Interfaces.Services;
 using MarketUz.Domain.ResourceParameters;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +6,7 @@ using Syncfusion.Drawing;
 using Syncfusion.Pdf;
 using Syncfusion.Pdf.Grid;
 using System.Data;
+using Inflow.Core.Supplier;
 
 namespace MarketUz.Controllers
 {

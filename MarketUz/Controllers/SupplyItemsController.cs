@@ -1,7 +1,7 @@
-﻿using MarketUz.Domain.DTOs.SupplyItem;
-using MarketUz.Domain.Interfaces.Services;
+﻿using MarketUz.Domain.Interfaces.Services;
 using MarketUz.Domain.ResourceParameters;
 using Microsoft.AspNetCore.Mvc;
+using Inflow.Core.SupplyItem;
 
 namespace MarketUz.Controllers
 {
