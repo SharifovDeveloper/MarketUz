@@ -1,6 +1,6 @@
-﻿using MarketUz.Domain.DTOs.Sale;
-using MarketUz.Domain.ResourceParameters;
+﻿using MarketUz.Domain.ResourceParameters;
 using MarketUz.Domain.Responses;
+using Inflow.Core.Sale;
 
 namespace MarketUz.Domain.Interfaces.Services
 {
