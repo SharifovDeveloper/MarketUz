@@ -1,6 +1,6 @@
-﻿using MarketUz.Domain.DTOs.Category;
-using MarketUz.Domain.ResourceParameters;
+﻿using MarketUz.Domain.ResourceParameters;
 using MarketUz.Domain.Responses;
+using Inflow.Core.Category;
 
 namespace MarketUz.Domain.Interfaces.Services
 {
