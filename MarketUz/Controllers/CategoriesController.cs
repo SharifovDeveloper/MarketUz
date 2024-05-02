@@ -1,14 +1,14 @@
-﻿using MarketUz.Domain.Interfaces.Services;
-using MarketUz.Domain.DTOs.Category;
-using MarketUz.Domain.DTOs.Product;
+﻿using ClosedXML.Excel;
+using MarketUz.Domain.Interfaces.Services;
 using MarketUz.Domain.ResourceParameters;
 using MarketUz.ResourceParameters;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 using Syncfusion.Drawing;
 using Syncfusion.Pdf;
 using Syncfusion.Pdf.Grid;
-using ClosedXML.Excel;
+using System.Data;
+using Inflow.Core.Category;
+using Inflow.Core.Product;
 
 namespace MarketUz.Controllers
 {
