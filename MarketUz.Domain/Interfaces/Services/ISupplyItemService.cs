@@ -1,6 +1,6 @@
-﻿using MarketUz.Domain.DTOs.SupplyItem;
-using MarketUz.Domain.ResourceParameters;
+﻿using MarketUz.Domain.ResourceParameters;
 using MarketUz.Domain.Responses;
+using Inflow.Core.SupplyItem;
 
 namespace MarketUz.Domain.Interfaces.Services
 {
