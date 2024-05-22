@@ -1,5 +1,3 @@
-using MarketUz.Web.Data;
-
 namespace MarketUz.Web
 {
     public class Program
@@ -11,7 +9,6 @@ namespace MarketUz.Web
             // Add services to the container.
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
-            builder.Services.AddSingleton<WeatherForecastService>();
 
             var app = builder.Build();
 
